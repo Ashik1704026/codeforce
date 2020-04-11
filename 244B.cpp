@@ -1,27 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
+long i,j,n;
+set<long long> s;
+void gen(long long x,int ch){
+    if(x > n || ch > 9) return;
+    s.insert(x);
+    gen(x * 10 + i,ch + 1);
+    gen(x * 10 + j,ch + 1);
+}
 int main(){
-    long n;
     cin >> n;
     long long x,y,ans = 0;
-    for(int i = 1;i <= 9;i ++){
-        if(i <= n)
-            ans ++;
-            y = i;
-        for(long long j = 10;x <= n;){
-            x = y * j + 9;
-            y = y * 10 + 1;
-            if(n >= x)
-                ans += 10;
-            else if(y - 1 <= n){
-                ans += n - y + 2;
-                //cout << ans;
-            }
+    for(i = 0;i <= 9;i ++){
+        for(j = i + 1;j <= 9;j ++){
+            gen(0,0);
         }
-    }    
-    cout << ans;
-
-
+    }
+    cout << s.size() - 1;
 
     return 0;
 }

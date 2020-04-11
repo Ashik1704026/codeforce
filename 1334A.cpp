@@ -10,7 +10,7 @@ int main(){
         while(n --){
             int x,y;
             cin >> x >> y;
-            if(x < a || y < b || x < y || y - a > x - a)
+            if(x < a || y < b || x < y || y - b > x - a)
                 flag = 0;
             a = x,b = y;
         }
