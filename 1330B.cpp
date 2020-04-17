@@ -22,3 +22,38 @@ int main(){
 		if(fl & 2 && mx != n-mx) cout << n-mx << " " << mx << "\n";		
 	}
 } 
+
+
+
+
+
+
+
+
+
+
+
+// cin >> n >> m;
+//     pair<int,int> l[n],s[n];
+//     for(int i = 0;i < m;i ++){
+//         cin >> l[i].first;
+//         l[i].second = i;
+//     }
+//     sort(l,l+n);
+//     int x = n;
+//     for(int i = m - 1;i >= 0;i --){
+//         int p = x + 1 - l[i].first;
+//         if(p > 0){
+//             s[i].first = l[i].second;
+//             s[i].second = p;
+//             x = p - 1;
+//         }
+//         else{
+//             s[i].first = l[i].second;
+//             s[i].second = 1;
+//             x = p;
+//         }
+//     }
+//     cout << x;
+
+//     return 0;
