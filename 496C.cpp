@@ -15,21 +15,25 @@ int main(){
     string str[n];
     ll s = 0,flag = 0;
     ll ar[10000];
+    memset(ar,0);
     for(int i = 0;i < n;i ++)
         cin >> str[i];
+    set<int> indx;
     for(int i = 0;i < m;i ++){
         for(int j = 1;j < n;j ++){
-            if(str[j][i] < str[j - 1][i]){
-                s ++;
-                break;
-            }
-            else if(str[j][i] == str[j - 1][i])
-
+            if(ar[j] == 0 && str[j][i] < str[j - 1][i])
+                flag = 1;
         }
+        if(flag)
+            s ++;
+        else{
+            for(int j = 1;j < n;j ++)
+                if(str[j][i] > str[j - 1][i])
+                    ar[j] = 1;
+        }
+        flag = 0;
     }
     cout << s;
-
-
 
     return 0;
 }

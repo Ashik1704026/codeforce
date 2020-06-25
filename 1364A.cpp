@@ -44,24 +44,34 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int n,x;
+        cin >> n >> x;
+        int ar[n + 10];
+        int md[n + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i],md[i] = ar[i] % x;
+        int sol = 0,d = 0;
+        for(int i = n - 1,j = 1;i >= 0;i --,j ++){
+            d += md[i];
+            if(d % x)
+                sol = j;
+        }
+        d = 0;
+        for(int i = 0;i < n;i ++){
+            d += md[i];
+            if(d % x)
+                sol = max(i + 1,sol);
+        }
+        if(sol)
+            cout << sol << "\n";
+        else
+            cout << "-1\n";
+    }
+    
+     
 
 
     return 0;

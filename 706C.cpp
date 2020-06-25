@@ -44,24 +44,31 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    ll n;
+    cin >> n;
+    ll ar[n + 10];
+    ll dp[n + 10][3];
+    for(int i = 0;i <= n;i ++)
+        memset(dp[i],0);
+    for(int i = 1;i <= n;i ++)
+        cin >> ar[i];
+    string str[n + 10][2];
+    for(int i = 1;i <= n;i ++){
+        cin >> str[i][0];
+        str[i][1] = str[i][0];
+        reverse(str[i][1].begin(),str[i][1].end());
+        for(int j = 0;j < 2;j ++){
+            dp[i][j] = 1e18;
+            for(int k = 0;k < 2;k ++){
+                if(str[i][j] >= str[i - 1][k])
+                    dp[i][j] = min(dp[i][j],dp[i - 1][k] + j * ar[i]);
+            }
+        }
+    }
+    // cout << dp[n][0] << " " << dp[n][1];
+    (min(dp[n][0],dp[n][1]) == 1e18)? cout << "-1" :
+    cout << min(dp[n][0],dp[n][1]) << "\n";
+    
 
 
     return 0;

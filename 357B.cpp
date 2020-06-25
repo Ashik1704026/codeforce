@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,25 +44,61 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
-
+    int n,m;
+    cin >> n >> m;
+    int ar[n + 10] = {0};
+    for(int i = 0;i < m;i ++){
+        int a,b,c;
+        cin >> a >> b >> c;
+        int x = ar[a],y = ar[b],z = ar[c];
+        if(x + y + z == 0)
+            ar[a] = 1,ar[b] = 2,ar[c] = 3;
+        else if(ar[a] == 0){
+            if(y && z)
+                ar[a] = 6 - y - z;
+            else if(y){
+                ar[a] = ((6 - y) / 2)  + 1;
+                ar[c] = 6 - ar[b] - ar[a];
+            }
+            else if(z){
+                ar[a] = ((6 - z) / 2) + 1;
+                ar[b] = 6 - ar[c] - ar[a];
+            }
+            // cout << "a";
+            // cout << ar[a] << ar[b] << ar[c];
+        }
+        else if(ar[b] == 0){
+            if(x && z)
+                ar[b] = 6 - x - z;
+            else if(x){
+                ar[b] = ((6 - x) / 2) + 1;
+                ar[c] = 6 - ar[b] - ar[a];
+            }
+            else if(z){
+                ar[b] = ((6 - z) / 2) + 1;
+                ar[a] = 6 - ar[b] - ar[c];
+            }
+            // cout << "b";
+            // cout << ar[a] << ar[b] << ar[c];
+        }
+        else if(ar[z] == 0){
+            if(y && x)
+                ar[c] = 6 - y - x;
+            else if(y){
+                ar[c] = ((6 - y) / 2) + 1;
+                ar[a] = 6 - ar[b] - ar[c];
+            }
+            else if(x){
+                ar[c] = ((6 - x) / 2) + 1;
+                ar[b] = 6 - ar[c] - ar[b];
+            }
+            // cout << "c";
+            // cout << ar[a] << ar[b] << ar[c];
+        }
+    }
+    for(int i = 1;i <= n;i ++)
+        cout << ar[i] << " ";
+    
 
     return 0;
 }

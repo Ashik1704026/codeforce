@@ -44,24 +44,47 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n;
+    cin >> n;
+    vctri v[n + 10];
+    int a[n + 10] = {0},b[n + 10] = {0},c[n] = {0};
+    for(int i = 0;i < n - 2;i ++){
+        int x,y,z;
+        cin >> x >> y >> z;
+        a[x] ++,a[y] ++,a[z] ++;
+        v[x].pb(y),v[x].pb(z);
+        v[y].pb(x),v[y].pb(z);
+        v[z].pb(x),v[z].pb(y);
+    }
+    int f,g,h;
+    for(int i = 1;i <= n;i ++)
+        if(a[i] == 1){
+            f = i;
+            b[i] = 1;
+            break;
+        }
+    cout << f << " ";
+    for(auto x : v[f]){
+        if(a[x] == 2){
+            cout << x << " ";
+            g = x;
+            b[x] = 1;
+            break;
+        }
+    }
+    for(int i = 0;i < n - 2;i ++){
+        for(int j = 0;j < v[f].size();j ++){
+            if(!b[v[f][j]]){
+                cout << v[f][j] << " ";
+                b[v[f][j]] = 1;
+                h = v[f][j];
+            }
+        }
+        f = g;
+        g = h;
+    }
+    
+     
 
 
     return 0;

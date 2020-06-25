@@ -44,25 +44,61 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int n;
+        cin >> n;
+        int ar[3 * n];
+        int od = 0,ev = 0;
+        vctri vod;
+        vctri vev;
+        for(int i = 0;i < 2 * n;i ++){
+            cin >> ar[i];
+            if(ar[i] & 1 == 1){
+                ev ++;
+                vev.pb(i);
+            }
+            else{
+                od ++;
+                vod.pb(i);
+            }
+        }
+        if(ev % 2){
+            int sz1 = vod.size();
+            int sz2 = vev.size();
+            int sz = min(sz1,sz2);
+            
+                for(int i = 1;i < sz1;i += 2)
+                    cout << vod[i] + 1<< " " << vod[i + 1] + 1 << "\n";
+                for(int i = 1;i < sz2;i += 2)
+                    cout << vev[i] + 1 << " " << vev[i + 1] + 1 << "\n";
+            // }
+        }
+        else{
+            // cout << "a";
+            int sz1 = vod.size();
+            int sz2 = vev.size();
+            // cout << sz1 << " " << sz2;
+            if(sz1 != 0){
+                for(int i = 2;i < sz1;i += 2)
+                    cout << vod[i] + 1 << " " << vod[i + 1] + 1 << "\n";
+                for(int i = 0;i < sz2;i += 2)
+                    cout << vev[i] + 1 << " " << vev[i + 1] + 1 << "\n";
+            }
+            else{
+                for(int i = 2;i < sz2;i += 2)
+                    cout << vev[i] + 1 << " " << vev[i + 1] + 1 << "\n";
+                for(int i = 0;i < sz1;i += 2)
+                    cout << vod[i] + 1 << " " << vod[i + 1] + 1 << "\n";
+            }
+        }
+
+    }
+    
+     
 
 
     return 0;
 }
+

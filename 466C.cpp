@@ -44,24 +44,40 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n;
+    cin >> n;
+    ll ar[n];
+    cin >> ar[0];
+    for(int i = 1;i < n;i ++){
+        ll a;
+        cin >> a;
+        ar[i] = ar[i - 1] + a;
+    }
+    if(ar[n - 1] % 3 != 0){
+        cout << "0\n";
+        return 0;
+    }
+    vctri v1,v2;
+    ll s = ar[n - 1] / 3;
+    ll cnt = 0;
+    for(int i = 0;i < n - 2;i ++){
+        if(ar[i] == s)
+            v1.pb(i);
+    }
+    int br[n + 10] = {0};
+    for(int i = 1;i < n - 1;i ++){
+        if(ar[i] == s + s)
+            br[i] += br[i - 1] + 1;
+        else
+            br[i] += br[i - 1];
+    }
+    for(auto x : v1){
+        cnt += br[n - 2] - br[x];
+        // cout << x << " " << br[n - 2] << " " << br[x] << "\n";
+    }
+    cout << cnt << "\n";
+    
+     
 
 
     return 0;

@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,25 +44,35 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n,m;
+    cin >> n >> m;
+    mapll mp;
+    int ar[200000];
+    int s[200000] = {0};
+    int ans[200000] = {0};
+    int l[200000],r[200000];
+    for(int i = 0;i < n;i ++){
+        cin >> ar[i];
+        mp[ar[i]] ++;
+    }
+    for(int i = 0;i < m;i ++)
+        cin >> l[i] >> r[i];
+    for(int i = 1;i <= n;i ++){
+        if(mp[i] >= i){
+            for(int j = 0;j < n;j ++)
+                s[j + 1] = s[j] + (ar[j] == i);
+            for(int j = 0;j < m;j ++)
+                if(s[r[j]] - s[l[j] - 1] == i)
+                    ans[j] ++;
+            // for(int j = 0;j <= n;j ++)
+            //     cout << s[j] << " ";
+            // cout << "\n";
+        }
+    }
+    for(int i = 0;i < m;i ++)
+        cout << ans[i] << "\n";
 
+    
 
     return 0;
 }

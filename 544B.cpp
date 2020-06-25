@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,29 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n,k;
+    cin >> n >> k;
+    vector<string> str(n,"");
+    for(int i = 0;i < n;i ++){
+        for(int j = 0;j < n;j ++){
+            int s = (i + j) & 1;
+            if(s == 0 && k > 0)
+                str[i].pb('L'),k --;
+            else
+                str[i].pb('S');
+        }
+    }
+    if(k == 0){
+        cout << "YES\n";
+        for(int i = 0;i < n;i ++){
+            for(int j = 0;j < n;j ++)
+                cout << str[i][j];
+            cout << "\n";
+        }
+    }
+    else
+        cout << "NO\n";
+     
 
 
     return 0;

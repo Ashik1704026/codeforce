@@ -44,24 +44,47 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n;
+    int t = 1;
+    // cin >> t;
+    while(t --){
+        int n;
+        cin >> n;
+        int ar[n + 10];
+        int br[n + 10];
+        for(int i = 0;i < n;i ++){
+            int a;
+            cin >> a;
+            ar[a] = i + 1;
+        }
+        for(int i = 0;i < n;i ++){
+            int a;
+            cin >> a;
+            br[a] = i + 1;
+        }
+        int cr[n + 10];
+        cr[0] = -1;
+        int mx = 0,cnt = 0;
+        for(int i = 1;i <= n;i ++){
+            if(ar[i] - br[i] < 0)
+                cr[i] = ar[i] - br[i] + n;
+            else
+                cr[i] = ar[i] - br[i]; 
+        }
+        sort(cr + 1,cr + n + 1);
+        for(int i = 1;i <= n;i++){
+            if(cr[i] != cr[i - 1]){
+                mx = max(mx,cnt);
+                cnt = 0;
+            }
+            else
+                cnt ++;
+        }
+        mx = max(mx,cnt);
+        cout << mx + 1 << "\n";
+    }
+    
+     
 
 
     return 0;

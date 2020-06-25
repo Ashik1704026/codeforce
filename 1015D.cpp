@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,48 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    ll n,k,s;
+    cin >> n >> k >> s;
+    if(s < k)
+        cout << "NO\n";
+    else if((n - 1) *1LL* k < s)
+        cout << "NO\n";
+    else{
+        cout << "YES\n";
+        ll sum = 0,x = n - 1,y = 1,b = 1;
+        for(int i = 0;i < k;i ++){
+            if(s - (sum + x) > k - i){
+                if(y % 2){
+                    cout << n << " ";
+                    y ++;
+                    b = n;
+                }
+                else{
+                    cout <<"1 ";
+                    y ++;
+                    b = 1;
+                }
+                sum += x;
+            }
+            else{
+                ll a = ceil(((s - sum) * 1.0) / ((k - i)) * 1.0);
+                if(y % 2){
+                    cout << b + a << " ";
+                    b += a;
+                    y ++;
+                }
+                else{
+                    cout << b - a << " ";
+                    b -= a;
+                    y ++;
+                }
+                sum += ceil(((s - sum) * 1.0) / ((k - i)) * 1.0);
+            }   
+        }
+    }
+       
+
+
 
 
     return 0;

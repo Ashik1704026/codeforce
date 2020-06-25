@@ -1,4 +1,3 @@
-// MD. Ashiqur Rahman
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -37,32 +36,77 @@ vector<bool> isPrime(10000010, true);
 inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; ++i){
         for (ll j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)
             isPrime[j - L] = false;}if (L == 1)isPrime[0] = false;}
-inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
+inline ll chckPrime(ll prme,ll L){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
-
+    int n;
+    cin >> n;
+    ll ar[n][n];
+    ll rs[n];
+    ll s = 0;
+    int r = 0,c = 0;
+    for(int i = 0;i < n;i ++){
+        for(int j = 0;j < n;j ++){
+            ll a;
+            cin >> a;
+            ar[i][j] = a;
+            s += a;
+            if(a == 0)
+                r = i,c = j;
+        }
+        rs[i] = s;
+        s = 0;
+    }
+    if(n == 1){
+        cout << "1\n";
+        return 0;
+    }
+    sort(rs,rs + n);
+    ll d = rs[1] - rs[0];
+    if(d == 0){
+        cout << "-1\n";
+        return 0;
+    }
+    ar[r][c] = d;
+    s = rs[1];
+    for(int i = 0;i < n;i ++){
+        ll s1 = 0;
+        for(int j = 0;j < n;j ++)
+            s1 += ar[i][j];
+        if(s1 != s){
+            cout << "-1\n";
+            return 0;
+        }
+    }
+    for(int i = 0;i < n;i ++){
+        ll s1 = 0;
+        for(int j = 0;j < n;j ++)
+            s1 += ar[j][i];
+        if(s1 != s){
+            cout << "-1\n";
+            return 0;
+        }
+    }
+    ll s1 = 0;
+    for(int i = 0;i < n;i ++)
+        s1 += ar[i][i];
+    if(s != s1){
+        cout << "-1\n";
+        return 0;
+    }
+    s1 = 0;
+    for(int i = 0;i < n;i ++)
+        s1 += ar[i][n - i - 1];
+    if(s != s1){
+        cout << "-1\n";
+        return 0;
+    }
+    cout << d << "\n";
+    
 
     return 0;
 }

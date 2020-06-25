@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,48 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int n;
+        cin >> n;
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        sort(ar,ar + n);
+        vctri vo;
+        vctri ve;
+        int od = 0,ev = 0;
+        int f = 0;
+        for(int i = 0;i < n;i ++){
+            if(ar[i] % 2)
+                od ++,vo.pb(ar[i]);
+            else
+                ev ++,ve.pb(ar[i]);
+        }
+        sort(vo.begin(),vo.end());
+        sort(ve.begin(),ve.end());
+        for(int i = 0;i < vo.size();i ++){
+            for(int j = 0;j < ve.size();j ++){
+                if(abs(vo[i] - ve[j]) == 1){
+                    f = 1;
+                }
+            }
+        }
+        if((od % 2 == 0 && ev % 2 == 1) || (od % 2 == 1 && ev % 2 == 0)){
+            cout << "NO\n";
+        }
+        else if(!(od % 2) && !(ev % 2)){
+            cout << "YES\n";
+        }
+        else if(f)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
+    }
+     
+
+
 
 
     return 0;

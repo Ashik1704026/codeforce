@@ -44,24 +44,65 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n;
+    cin >> n;
+    priority_queue<ll> pq;
+    vector<pair<string,ll> > v;
+    vctri vo;
+    for(int i = 0;i < n;i ++){
+        string ch;
+        ll a;
+        cin >> ch;
+        if(ch[0] == 'i'){
+            cin >> a;
+            v.pb(mp("insert",a));
+            pq.push(-a);
+        }
+        if(ch[0] == 'r'){
+            if(pq.empty()){
+                v.pb(mp("insert",1));
+                v.pb(mp("removeMin",0));
+                continue;
+            }
+            v.pb(mp("removeMin",0));
+            pq.pop();
+        }
+        if(ch[0] == 'g'){
+            cin >> a;
+            if(pq.empty()){
+                pq.push(-a);
+                v.pb(mp("insert",a));
+                v.pb(mp("getMin",a));
+                continue;
+            }
+            int x = -pq.top();
+            while(x < a && !pq.empty()){
+                v.pb(mp("removeMin",0));
+                pq.pop();
+                x = -pq.top();
+            }
+            if(pq.empty() || x > a){
+                pq.push(-a);
+                v.pb(mp("insert",a));
+                v.pb(mp("getMin",a));
+            }
+            else{
+                v.pb(mp("getMin",a));
+            }
+        }
+    }
+    cout << v.size() << "\n";
+    for(int i = 0;i < v.size();i ++){
+        string str;
+        ll a;
+        str = v[i].F,a = v[i].S;
+        if(str[0] == 'r')
+            cout << v[i].F << "\n";
+        else
+            cout << v[i].F << " " << v[i].S << "\n"; 
+    }
+    
+     
 
 
     return 0;

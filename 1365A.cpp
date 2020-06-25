@@ -44,24 +44,51 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n;
+    int t;
+    cin >> t;
+    while(t --){
+        int n,m;
+        cin >> n >> m;
+        int ar[n][m];
+        for(int i = 0;i < n;i ++)
+            for(int j = 0;j < m;j ++)
+                cin >> ar[i][j];
+        int rw[n + 10],cl[m + 10];
+        for(int i = 0;i < n;i ++){
+            int a = 0;
+            for(int j = 0;j < m;j ++)
+                if(ar[i][j] == 1)
+                    a = 1;
+            rw[i] = a;
+        }
+        for(int i = 0;i < m;i ++){
+            int a = 0;
+            for(int j = 0;j < n;j ++)
+                if(ar[j][i] == 1)
+                    a = 1;
+            cl[i] = a;
+        }
+        int cnt = 0;
+        for(int i = 0;i < n;i ++){
+            for(int j = 0;j < m;j ++){
+                if(ar[i][j] == 0){
+                    if(rw[i] == 0 && cl[j] == 0){
+                        cnt ++;
+                        rw[i] = 1;
+                        cl[j] = 1;
+                    }
+                }
+            }
+        }
+        if(cnt % 2)
+            cout << "Ashish\n";
+        else
+            cout << "Vivek\n";
+        
+    }
+    
+     
 
 
     return 0;

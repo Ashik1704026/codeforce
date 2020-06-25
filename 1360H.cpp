@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,56 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int n,m;
+        cin >> n >> m;
+        ll f = pow(2,m) - 1;
+        vctrl v;
+        for(int i = 0;i < n;i ++){
+            string str;
+            cin >> str;
+            reverse(str.begin(),str.end());
+            ll a = 0;
+            for(int j = 0;j < m;j ++)
+                if(str[j] == '1')
+                    a += (1 << j);
+            v.pb(a);
+        }
+        ll mid = f / 2;
+        f += 1;
+        for(auto x : v){
+            if(x <= mid && f % 2 == 0)
+                mid += 1;
+            else if(x >= mid && f % 2)
+                mid -= 1; 
+            f --;
+            // cout << mid << " " << f << " ";  
+        }
+        int r;
+        string sol = "";
+        if(mid == 0){
+            for(int i = 0;i < m;i ++)
+                cout << mid;
+            cout << "\n";
+        }
+        else{
+            while(mid != 0){
+                sol += (mid % 2) + '0';
+                mid = mid / 2;
+            }
+            reverse(sol.begin(),sol.end());
+            if(sol.size() < m){
+                for(int i = 0;i < m - sol.size();i ++)
+                    cout << "0";
+            }
+            cout << sol << "\n";
+        }
+     }
+     
+
+
 
 
     return 0;

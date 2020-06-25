@@ -44,24 +44,43 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int h,c,tp;
+        ll cnt;
+        cin >> h >> c >> tp;
+        double d1,d2,d3,x,s;
+        if(h == tp){
+            cout << "1\n";
+            continue;
+        }
+        if((h + c) / 2 == tp){
+            cout << "2\n";
+            continue;
+        }
+        x = ((h - tp) * 1.0) / (2 * tp - h - c);
+        cnt = abs(ceil(x * 1.0));
+        s = ((h * (cnt + 1)) + (c * cnt)) / ((2 * cnt * 1.0) + 1);
+        d1 = abs(tp - s);
+        cnt = abs(floor(x *1.0));
+        s = ((h * (cnt + 1)) + (c * cnt)) / ((2 * cnt * 1.0) + 1);
+        d2 = abs(tp - s);
+        d3 = abs(tp - ((h + c) * 1.0) / 2.0);
+        if(d1 < d2){
+            if(d1 < d3)
+                cout << abs(ceil(x * 1.0)) * 2 + 1 << "\n";
+            else
+                cout << "2\n";
+        }
+        else{
+            if(d2 < d3)
+                cout << cnt * 2 + 1<< "\n";
+            else
+                cout << "2\n";
+        }
+    }
+     
 
 
     return 0;

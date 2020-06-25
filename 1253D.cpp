@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -41,28 +41,49 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+int mx = 0;
+vctri edg[250000];
+int x = 0;
+int visited[250000];
+void bfs(int s){
+    queue<int> q;
+    q.push(s);
+    visited[s] = 1;
+    while(!q.empty()){
+        int z = q.front();
+        q.pop();
+        for(auto y : edg[z]){
+            if(!visited[y]){
+                visited[y] = 1;
+                q.push(y);
+                mx = max(mx,y);
+                // cout << y << " ";
+            }
+        }
+    }
+}
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
-
+    int n,m;
+    cin >> n >> m;
+    for(int i = 0;i < m;i ++){
+        int a,b;
+        cin >> a >> b;
+        edg[a].pb(b);
+        edg[b].pb(a);
+    }
+    ll s = 0;
+    bfs(1);
+    for(int i = 2;i <= n;i ++){
+        if(!visited[i]){
+            if(i < mx)
+                s ++;
+            bfs(i);
+        }
+    }
+    cout << s;
+    
 
     return 0;
 }

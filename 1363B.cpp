@@ -44,24 +44,42 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        string str;
+        int cnt = 0;
+        cin >> str;
+        int sz = str.size();
+        int f1 = 0,f2 = 0;
+        int ar[10000],br[10000],cr[10000],dr[10000];
+        vctri v;
+        for(int i = 1;i < sz;i ++){
+            if(str[i] != str[i - 1])
+                v.pb(i);
+        }
+        for(int i = 0;i < sz;i ++){
+            if(str[i] == '0')
+                f1 ++;
+            else
+                f2 ++;
+            ar[i] = f1;
+            br[i] = f2;
+        }
+        int s1 = 0,s2 = 0,sol = min(f1,f2);
+        for(int i = 0;i < sz;i ++){
+            s1 = ar[i] + br[sz - 1] - br[i];
+            s2 = br[i] + ar[sz - 1] - ar[i];
+            s1 = min(s1,s2);
+            sol = min(s1,sol);
+            // cout << ar[i] << " " << dr[i] << " " << br[i] << " " << cr[i] << "\n";
+        }
+        // if(v.size() < 2)
+        //     cout << "0\n";
+        // else
+            cout << sol << "\n";
+    }
+     
 
 
     return 0;

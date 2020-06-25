@@ -44,24 +44,49 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n,t;
+    cin >> n >> t;
+    string str1,str2;
+    cin >> str1 >> str2;
+    string sol(n,0);
+    int mil = n - t;
+    for(int i = 0;i < n;i ++){
+        if(mil == 0)
+            break;
+        if(str1[i] == str2[i]){
+            sol[i] = str1[i];
+            mil --;
+        }
+    }
+    int x = mil,y = mil;
+    for(int i = 0;i < n;i ++){
+        if(sol[i] == 0){
+            if(x){
+                sol[i] = str1[i];
+                x --;
+                continue;
+            }
+            if(y){
+                sol[i] = str2[i];
+                y --;
+            }
+        }
+    }
+    for(int i = 0;i < n;i ++){
+        if(sol[i] == 0){
+            for(char a = 'a';a <= 'z';a ++){
+                if(a != str1[i] && a != str2[i]){
+                    sol[i] = a;
+                    break;
+                }
+            }
+        }
+    }
+    if(y == 0)
+        cout << sol <<"\n";
+    else
+        cout << "-1\n";   
+
 
 
     return 0;

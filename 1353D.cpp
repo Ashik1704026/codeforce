@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,31 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    while(t --){
+        int n;
+        cin >> n;
+        int ar[n],x = 0;;
+        priority_queue<pair<int,pair<int,int> > > pq;
+        pq.push({n,{-1,n}});
+        while(!pq.empty()){
+            auto tmp = pq.top();
+            pq.pop();
+            int l = -tmp.S.F;
+            int r = tmp.S.S;
+            int mid = (l + r) / 2;
+            ar[mid] = ++ x;
+            if(l != mid)
+                pq.push({mid - l,{-l,mid - 1}});
+            if(r != mid)
+                pq.push({r - mid,{-(mid + 1),r}});
+            // cout << l << " " << mid << " " << r << "\n";
+        }
+        for(int i = 1;i <= n;i ++)
+            cout << ar[i] << " ";
+        cout << "\n";
+    }
 
 
     return 0;

@@ -42,26 +42,36 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    string str,pref = "",suff = "",tmp = "";
+    vector<string> v;
+    cin >> str;
+    int n = str.size();
+    for(int i = 0,j = n - 1;i < n - 1;i ++,j --){
+        pref += str[i];
+        suff += str[j];
+        tmp = suff;
+        reverse(tmp.begin(),tmp.end());
+        if(pref == tmp)
+            v.pb(pref);
+    }
+    int m = v.size();
+    for(int i = m - 1;i >= 0;i --){
+        int sz = v[i].size();
+        for(int j = 1;j < n - sz;j ++){
+            tmp = str.substr(j,sz);
+            // cout << tmp << " ";
+            if(tmp == v[i]){
+                cout << v[i] << "\n";
+                return 0;
+            }
+        }
+        // cout << v[i] << " ";
+    }
+    cout << "Just a legend\n";
+
 
 
     return 0;

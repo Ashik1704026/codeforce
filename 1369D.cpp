@@ -40,28 +40,26 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
-
+int mx = 2000005;
+int md = 1e9 + 7;
+ll ar[2000005];
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int t;
+    cin >> t;
+    ar[0] = ar[1] = ar[2] = 0;
+    for(int i = 3;i <= mx;i ++){
+        ar[i] = (ar[i - 1] + ar[i - 2] * 2) % md;
+        if(i % 3 == 0)
+            ar[i] = (ar[i] + 1) % md;
+    }
+    while(t --){
+        int n;
+        cin >> n;
+        ll s = (ar[n] * 4) % md;
+        cout << s << "\n";
+    }
 
 
     return 0;

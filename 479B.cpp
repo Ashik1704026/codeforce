@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,24 +44,47 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    int n,k;
+    cin >> n >> k;
+    int ar[n + 10];
+    for(int i = 1;i <= n;i ++)
+        cin >> ar[i];
+    // sort(ar,ar + n);
+    int mn = 999999;
+    vctri sol;
+    int x = 0;
+    while(x < k){
+        int l = ar[1],li = 1,r = ar[1],ri = 1;
+        for(int i = 1;i <= n;i ++){
+            if(ar[i] < l){
+                l = ar[i];
+                li = i;
+            }
+            if(ar[i] > r){
+                r = ar[i];
+                ri = i;
+            } 
+        }
+        if(l == r){
+            mn = 0;
+            break;
+        }
+        else if(li != ri){
+            ar[li] ++;
+            ar[ri] --;
+            r = *max_element(ar + 1,ar + n + 1);
+            l = *min_element(ar + 1,ar + n + 1);
+            // sort(ar,ar + n);
+            // cout << r << " " << l << " ";
+            mn = min(mn,abs(r - l));
+            sol.pb(ri);
+            sol.pb(li);
+            x ++;
+        }
+    } 
+    cout << "\n" << mn << " " << x << "\n";
+    for(int i = 0;i < sol.size();i += 2)
+        cout << sol[i] << " " << sol[i + 1] << "\n";
 
 
     return 0;

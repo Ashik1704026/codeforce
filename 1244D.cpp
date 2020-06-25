@@ -1,4 +1,4 @@
-// MD. Ashiqur Rahman
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -42,27 +42,74 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+int visited[200000];
+int t = 1;
+vctri g[200000];
+int path[200000];
+void dfs(int x){
+    path[t ++] = x;
+    visited[x] = 1;
+    for(auto y : g[x]){
+        if(!visited[y])
+            dfs(y);
+    }
+}
+
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
-
+    int n;
+    cin >> n;
+    ll ar[4][n + 10];
+    memset(ar[1],0);
+    memset(ar[2],0);
+    memset(ar[3],0);
+    ll sol[n + 10];
+    ll clr[n + 10];
+    for(int i = 1;i <= 3;i ++)
+        for(int j = 1;j <= n;j ++)
+            cin >> ar[i][j];
+    for(int i = 1;i < n;i ++){
+        int a,b;
+        cin >> a >> b;
+        g[a].pb(b);
+        g[b].pb(a);
+    }
+    int strt;
+    for(int i = 1;i <= n;i ++){
+        if(g[i].size() > 2){
+            cout << "-1\n";
+            return 0;
+        }
+        if(g[i].size() == 1)
+            strt = i;
+    }
+    dfs(strt);
+    // for(int i = 1;i <= n;i ++)
+    //     cout << path[i] << " ";
+    // cout << "\n";
+    ll ans = 1e18 + 10;
+    for(int i = 1; i<= 3;i ++)
+        for(int j = 1;j <= 3;j ++)
+            for(int k = 1;k <= 3;k ++)
+                if(i != j && i != k && j!= k){
+                    ll sum = 0;
+                    for(int h = 1;h <= n;h += 3){
+                        sum += ar[i][path[h]] + ar[j][path[h + 1]] + ar[k][path[h + 2]];
+                        // cout << ar[i][path[h]] << " " << ar[j][path[h + 1]] << " " << ar[k][path[h + 2]] << " ";
+                    }
+                    // cout << i << j << k << sum << " ";
+                    // cout << "\n";
+                    if(ans > sum){
+                        ans = sum;
+                        sol[1] = i,sol[2] = j,sol[0] = k;
+                    }
+                }
+    cout << ans << "\n";
+    for(int i = 1;i <= n;i ++)
+        clr[path[i]] = sol[i % 3];
+    for(int i = 1;i <= n;i ++)
+        cout << clr[i] << " ";
+    
 
     return 0;
 }

@@ -40,28 +40,42 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
+ll n,m,k;
+string str[50000];
+int visited[5000][5000];
+void X(int i,int j){
+    if(i < 0 || i >= n || j < 0 || j >= m || str[i][j] != '.' || visited[i][j] == 1)
+        return;
+    visited[i][j] = 1;
+    X(i + 1,j);
+    X(i,j + 1);
+    X(i - 1,j);
+    X(i,j - 1);
+    if(k){
+        str[i][j] = 'X';
+        k --;
+    }
+}
 
 
 int main(){
     fast;
-    ll ar[4];
-	cin >> ar[0] >> ar[1] >> ar[2];
-	sort(ar,ar + 3);
-	ll a,b,c,x;
-	a = min(ar[0] + ar[1],ar[2]);
-	b = max(ar[0] + ar[1],ar[2]);
-	if(b >= 2 * a)
-		x = a;
-	else{
-		x = b - a;
-		a -= x;
-		c = a / 3;
-		x += (c * 2);
-		a -= (c * 3);
-		if(a == 2)
-			x ++;
-	}
-	cout << x << "\n";
+    cin >> n >> m >> k;
+    for(int i = 0;i < n;i ++)
+        cin >> str[i];
+    ll dot = 0;
+    for(int j,i = 0;i < n;i ++){
+        for(j = 0;j < m;j ++)
+            if(str[i][j] == '.'){
+                X(i,j);
+                break;
+            }
+        if(j < m)
+            break;
+    }
+    for(int i = 0;i < n;i ++)
+        cout << str[i] << "\n";
+    
 
 
     return 0;
