@@ -1,81 +1,89 @@
-#include <bits/stdc++.h>
+// MD. Ashiqur Rahman
+#include<bits/stdc++.h>
 using namespace std;
-int main()
-{
-	int n,j=0;
-	cin>>n;
-	string str;
-	string ch;
-	cin>>ch;
-	str+=ch[0];
-	for(int i=1;i<n;i++)
-	{
-		cin>>ch;
-		if(ch[0]!=str[j])
-		{
-			str+=ch[0];
-			j++;
-		}
+
+#define         ll         long long
+#define         pb         push_back
+#define         scn(x)     scanf("%d",&x)
+#define         scnl(x)    scanf("%lld",&x)
+#define         prnt(x)    printf("%d\n",x)
+#define         prntl(x)   printf("%lld\n",x)
+#define         prii       pair<int,int>
+#define         mapii      map<int,int>
+#define         mapll      map<ll,ll>
+#define         mapci      map<char,int>
+#define         mapcl      map<char,ll>
+#define         mapsi      map<string,int>
+#define         mapsl      map<string,ll>
+#define         prll       pair<ll,ll>
+#define         vctri      vector<int>
+#define         vctrl      vector<ll>
+#define         vctrd      vector<double,double>
+#define         all(a)     (a).begin(),(a).end()
+#define         rall(a)    (a).rbegin(),(a).rend()
+#define         F          first
+#define         S          second
+#define         mp         make_pair
+#define         ftc(x)     cerr << #x << ": " << x << " " << '\n';
+#define         PI         acos(-1)
+#define         lcm(a,b)   ((a*b)/__gcd(a,b))
+#define         fast       ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define         sqr(a)     ((a)*(a))
+#define         memset(x,v) memset(x, v, sizeof(x))
+#define         ask         '\n'
+#define         negmod(x,y) ((x % y) + y) % y 
+
+
+ll MOD;
+inline void modulas(ll a) {MOD = a;}
+inline void normal(ll &a) { a %= MOD; (a < 0) && (a += MOD); }
+inline ll modMul(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); return (a*b)%MOD; }
+inline ll modAdd(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); return (a+b)%MOD; }
+inline ll modSub(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); a -= b; normal(a); return a; }
+inline ll modPow(ll b, ll p) { ll r = 1; while(p) { if(p&1) r = modMul(r, b); b = modMul(b, b); p >>= 1; } return r; }
+inline ll modInverse(ll a) { return modPow(a, MOD-2); }
+inline ll modDiv(ll a, ll b) { return modMul(a, modInverse(b)); }
+
+vector<bool> isPrime(10000010, true);
+inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; ++i){
+        for (ll j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)
+            isPrime[j - L] = false;}if (L == 1)isPrime[0] = false;}
+inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
+inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
+
+
+
+int e[30][30];
+
+int getvlu(char a){
+	if(a == ' ')
+		return 0;
+	return a - 'a' + 1;
+}
+
+int main(){
+    fast;
+    int n;
+	cin >> n;
+	string str[n + 10];
+	for(int i = 0;i < n;i ++){
+		cin >> str[i];
+		str[i] += " ";
 	}
-	string str1;
-	str1=str;
-	sort(str.begin(),str.end());
-	for(int i=0;i<j;i++)
-	{
-		if(str[i]==str[i+1])
-		{
-			cout<<"Impossible\n";
-			return 0;
-		}
+	for(int i = 0;i + 1 < n;i ++){
+		int pos = 0;
+		while(str[i][pos] == str[i + 1][pos]) pos ++;
+		e[getvlu(str[i][pos])][getvlu(str[i + 1][pos])] = 1;
+		cout << getvlu(str[i][pos]) << " " << getvlu(str[i + 1][pos]) << "\n";
 	}
-	map< char,int >m;
-	for(int i=0;i<=j;i++)
-	{
-        char ch;
-        ch=str[i];
-        m[ch]=1;
-    }
-    int i=26,k=0;
-    char ch1='a';
-    while(i--)
-    {
-    	if(ch1==str1[k] && k<=j)
-    	{
-    		cout<<ch1;
-    		ch1++;
-    		k++;
-    	}
-    	 else if(ch1<str1[k])
-    	{
-    		
-    				if(m[ch1]!=1)
-    				{
-    					cout<<ch1;
-    					ch1++;
-    				}
-    				else
-    				{
-    					ch1++;
-    					i+=1;
-    				}
-    		
-    	}
-    	else if(ch1>str1[k] && k<=j)
-    	{
-    				cout<<str1[k];
-    				k++;
-    	}
-    	else if(k>j)
-    	{
-    			if(m[ch1]!=1)
-    			{
-    				cout<<ch1;
-    				ch1++;
-    			}
-       	}
-    }
+	for(int i = 0;i <= 26;i ++){
+		for(int j = 0;j < 27;j ++)
+			cout << e[i][j] << " ";
+		cout << "\n";
+	}
+    
 
 
 
-	return 0;
+    return 0;
 }

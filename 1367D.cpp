@@ -125,21 +125,33 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n,k;
-        cin >> n >> k;
         string s;
         cin >> s;
-        int x = k,sol = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '0')
-                x ++;
-            if(s[i] == '1'){
-                if(sol && x < k)
-                    sol --;
-                x = 0;
+        int m;
+        cin >> m;
+        string sol(m,'.');
+        int b[m];
+        for(int i = 0;i < m;i ++)
+            cin >> b[i];
+        char cur = 'z';
+        while(cur >= 'a'){
+            vector<int> v;
+            for(int i = 0;i < m;i ++){
+                if(sol[i] != '.')
+                    continue;
+                int tmp = 0;
+                for(int j = 0;j < m;j ++){
+                    if(sol[j] != '.')
+                        tmp += abs(i - j);
+                }
+                if(tmp == b[i])
+                    v.pb(i);
             }
-            if(x > k)
-                x = 0,sol ++;
+            while(count(s.begin(),s.end(),cur) < v.size())
+                -- cur;
+            for(auto x : v)
+                sol[x] = cur;
+            -- cur;
         }
         cout << sol << "\n";
     }

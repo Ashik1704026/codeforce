@@ -41,37 +41,27 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
-
+const int MAX=1e6+9;
+bool mark[MAX];
+int f[MAX],k;
 
 int main(){
     fast;
-    string str,pref = "",suff = "",tmp = "";
-    vector<string> v;
+    string str;
     cin >> str;
-    int n = str.size();
-    for(int i = 0,j = n - 1;i < n - 1;i ++,j --){
-        pref += str[i];
-        suff += str[j];
-        tmp = suff;
-        reverse(tmp.begin(),tmp.end());
-        if(pref == tmp)
-            v.pb(pref);
+    for(int i = 1;i < str.size();i ++){
+        while(k && str[i] != str[k]) k = f[k - 1];
+        if(str[i] == str[k]) k ++;
+        f[i] = k;
+        if(i < str.size() - 1) mark[k] = 1;
     }
-    int m = v.size();
-    for(int i = m - 1;i >= 0;i --){
-        int sz = v[i].size();
-        for(int j = 1;j < n - sz;j ++){
-            tmp = str.substr(j,sz);
-            // cout << tmp << " ";
-            if(tmp == v[i]){
-                cout << v[i] << "\n";
-                return 0;
-            }
-        }
-        // cout << v[i] << " ";
-    }
-    cout << "Just a legend\n";
-
+    mark[0] = 1;
+    k = f[str.size() - 1];
+    while(k && !mark[k]) k = f[k - 1];
+    if(k)
+        cout << str.substr(0,k);
+    else
+        cout << "Just a legend";
 
 
     return 0;

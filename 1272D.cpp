@@ -60,38 +60,29 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
-        }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-            }
-            else
-                ar[v1[i]] = v[i];
-        }
+        ll ar[n + 10] = {0};
         for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+            cin >> ar[i];
+        int left[n + 10] = {0},right[n + 10] = {0};
+        for(int i = 1;i <= n;i ++){
+            if(ar[i] > ar[i - 1])
+                left[i] += left[i - 1] + 1;
+            else
+                left[i] = 1;
+        }
+        for(int i = n;i >= 0;i --){
+            if(ar[i] < ar[i + 1])
+                right[i] += right[i + 1] + 1;
+            else
+                right[i] = 1;
+        }
+        int sol = 0;
+        for(int i = 1;i <= n;i ++){
+            sol = max(sol,left[i]);
+            if(ar[i - 1] < ar[i + 1])
+                sol = max(sol,left[i - 1] + right[i + 1]);
+        }
+        cout << sol << "\n";
     }
 
     return 0;

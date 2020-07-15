@@ -53,45 +53,55 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t --){
-        int n;
+        ll n,s,d,f = 1;
         cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
-        }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
+        ll ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        if(n == 1){
+            seivePrime(0,ar[0]);
+            if(chckPrime(0,ar[0])){
+                s = ar[0] * 1LL * ar[0];
+                cout << s << "\n";
             }
             else
-                ar[v1[i]] = v[i];
+                cout << "-1\n";
+            continue;
         }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        sort(ar,ar + n);
+        s = ar[0] *1LL* ar[n - 1];
+        d = s;
+        if(n % 2){
+            d = ar[n / 2] *1LL* ar[n / 2];
+        }
+        if(d != s)
+            f = 0;
+        for(int i = 1,j = n - 2;i < n / 2;i ++,j --){
+            d = ar[i] * 1LL * ar[j];
+            if(s != d)
+                f = 0;
+        }
+        if(!f){
+            cout << "-1\n";
+            continue;
+        }
+        set<ll> v;
+        for(int i = 2;i <= sqrt(s) ;i ++){
+            if(s % i == 0){
+                v.insert(i);
+                v.insert(s / i);
+            }
+        }
+        if(n != v.size())
+            cout << "-1\n";
+        else
+            cout << s << "\n";
     }
 
     return 0;

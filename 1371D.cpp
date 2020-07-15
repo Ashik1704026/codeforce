@@ -53,45 +53,58 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
+        int n,k,x = 1;
+        cin >> n >> k;
+        int ar[n + 10][n + 10];
+        memset(ar,0);
         for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
-        }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
+            for(int j = 1;j <= n;j ++){
+                if(k && i == 1){
+                    ar[j][j] = 1;
+                    k --;
                 }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
+                else if(k && j >= i){
+                    ar[x ++][j] = 1;
+                    k --;
                 }
             }
-            else
-                ar[v1[i]] = v[i];
+            x = n - i + 2;
+            if(k && i != 1){
+                for(int l = 1;l < i;l ++){
+                    if(k){
+                        ar[x ++][l] = 1;
+                        k --;
+                    }
+                }
+            }
+            x = 1;
         }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        ll ri [n + 10];
+        ll ci[n + 10];
+        memset(ri,0);
+        memset(ci,0);
+        for(int i = 1;i <= n;i ++){
+            for(int j = 1;j <= n;j ++){
+                ri[i] += ar[i][j];
+                ci[j] += ar[i][j];
+            }
+        }
+        sort(ri + 1,ri + 1 + n);
+        sort(ci + 1,ci + n + 1);
+        ll a = sqr(ri[1] - ri[n]);
+        ll b = sqr(ci[1] - ci[n]);
+        cout << a + b << "\n";
+        for(int i = 1;i <= n;i ++){
+            for(int j = 1;j <= n;j ++)
+                cout << ar[i][j];
+            cout << "\n";
+        }
     }
 
     return 0;

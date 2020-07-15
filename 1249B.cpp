@@ -55,43 +55,33 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t --){
         int n;
         cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
+        vctri v[205000];
         for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
+            int a;
+            cin >> a;
+            v[i].pb(a);
         }
+        int sol[205000] = {0};
         for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
+            int x = 1,y = i;
+            vctri path;
+            path.pb(i);
+            while(v[y][0] != i && !sol[i]){
+                x ++,y = v[y][0];
+                path.pb(y);
             }
-            else
-                ar[v1[i]] = v[i];
+            for(auto d : path)
+                if(!sol[d])
+                    sol[d] = x;
         }
         for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+            cout << sol[i] << " ";
+        cout << "\n";
     }
 
     return 0;

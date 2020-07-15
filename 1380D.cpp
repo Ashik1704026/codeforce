@@ -58,40 +58,69 @@ int main(){
     int t = 1;
     // cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
-        }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
+        int n,m;
+        cin >> n >> m;
+        ll x,k,y;
+        cin >> x >> k >> y;
+        int ar[n + 10],br[n + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        for(int i = 0;i < m;i ++)
+            cin >> br[i];
+        ll res = 0,lst = -1,posa = 0,posb = 0;
+        while(posb < m){
+            while(posa < n && ar[posa] != br[posb]) ++ posa;
+            if(posa == n){
+                cout << "-1\n";
+                return 0;
             }
-            else
-                ar[v1[i]] = v[i];
+            ll l = lst + 1,r = posa - 1;
+            ll len = r - l + 1;
+            if(l > r){
+                lst  = posa;
+                posb ++;
+                continue;
+            }
+            int check = 0,mx = *max_element(ar + l,ar + r + 1);
+            if(l - 1 >= 0 && ar[l - 1] > mx) check = 1;
+            if(r + 1 < n && ar[r + 1] > mx) check = 1;
+            if(len < k && !check){
+                cout << "-1\n";
+                return 0;
+            }
+            int need = len % k;
+            res += need * y;
+            len -= need;
+            if(k * y < x && check)
+                res += len * y;
+            else if(k * y >= x)
+                res += (len / k) * x;
+            else if(len >= k)
+                res += (len - k) * y + x;
+            posb ++;
+            lst = posa;
         }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        ll l = lst + 1,r = n - 1;
+        ll len = r - l + 1;
+        if(l <= r){
+            int check = 0,mx = *max_element(ar + l,ar + r + 1);
+            if(l - 1 >= 0 && ar[l - 1] > mx) check = 1;
+            if(r + 1 < n && ar[r + 1] > mx) check = 1;
+            if(len < k && !check){
+                cout << "-1\n";
+                return 0;
+            }
+            int need = len % k;
+            res += need * y;
+            len -= need;
+            if(k * y < x && check)
+                res += len * y;
+            else if(k * y >= x)
+                res += (len / k) * x;
+            else if(len >= k)
+                res += (len - k) * y + x;
+        }
+        cout << res << "\n";
     }
 
     return 0;

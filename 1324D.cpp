@@ -53,45 +53,56 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    t = 1;
     while(t --){
         int n;
         cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
+        ll a[n],b[n];
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        for(int i = 0;i < n;i ++)
+            cin >> b[i];
+        vctrl pos,neg;
+        ll cnt0 = 0,cntpos = 0,cntneg = 0;
+        for(int i = 0;i < n;i ++){
+            if(a[i] - b[i] == 0)
+                cnt0 ++;
+            else if(a[i] - b[i] > 0)
+                pos.pb(a[i] - b[i]);
+            else
+                neg.pb(b[i] - a[i]);
         }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
+        int x = 0;
+        cntpos = pos.size();
+        sort(pos.begin(),pos.end());
+        sort(neg.begin(),neg.end());
+        if(neg.size() > 0){
+        for(int i = 0;i < pos.size();i ++){
+            for(int j = x;j < neg.size();j ++){
+                if(neg[j] >= pos[i]){
+                    cntneg += j;
+                    x = j;
+                    break;
                 }
             }
-            else
-                ar[v1[i]] = v[i];
+            if(neg[neg.size() - 1] < pos[i]){
+                cntneg += neg.size();
+                x = cntneg;
+            }
+            // cout << cntneg << " ";
         }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        }
+        ll sum = 0;
+        sum += (cntpos * (cntpos - 1) / 2);
+        // cout << sum << " ";
+        sum += (cntpos * cnt0);
+        // cout << sum << " ";
+        sum += cntneg;
+        cout << sum << "\n";
     }
 
     return 0;

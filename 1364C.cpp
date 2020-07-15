@@ -52,46 +52,30 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+int ar[2000000],br[2000000],f[2000000];
+
 
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
-    while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
+    int n;
+    cin >> n;
+    memset(br,-1);
+    for(int i = 1;i <= n;i ++){
+        cin >> ar[i];
+        if(ar[i] != ar[i - 1]){
+            br[i] = ar[i - 1];
+            f[br[i]] = 1;
         }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
+    }
+    f[ar[n]] = 1;
+    int x = 0;
+    for(int i = 1;i <= n;i ++){
+        while(f[x]) x ++;
+        if(br[i] == -1){
+            br[i] = x;
+            f[x] = 1;
         }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-            }
-            else
-                ar[v1[i]] = v[i];
-        }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        cout << br[i] << " ";
     }
 
     return 0;

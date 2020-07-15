@@ -52,47 +52,38 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+const int MAX=1e3+9;
+ll fact[MAX];
 
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
-    while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
-        }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-            }
-            else
-                ar[v1[i]] = v[i];
-        }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+    string str;
+    cin >> str;
+    ll nb,ns,nc,Pb,ps,pc,b = 0,s = 0,c = 0,w = 0;
+    cin >> nb >> ns >> nc >> Pb >> ps >> pc;
+    ll r,m,l = 0,h = 10e12 + 10,sum = 0;
+    cin >> r;
+    for(int i = 0;i < str.size();i ++){
+        if(str[i] == 'B')
+            b ++;
+        else if(str[i] == 'S')
+            s ++;
+        else
+            c ++;
     }
+    while(l + 1 < h){
+        m = (l + h) / 2;
+        sum += max(m * b - nb,w) * Pb;
+        sum += max(m * s - ns,w) * ps;
+        sum += max(m * c - nc,w) * pc;
+        (sum > r)? h = m : l = m; 
+        sum = 0;
+        cout << m << " " << h << " " << l << "\n";
+    }
+    cout << l << "\n";
+    
+
+
 
     return 0;
 }

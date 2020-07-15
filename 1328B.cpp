@@ -31,18 +31,7 @@ using namespace std;
 #define         sqr(a)     ((a)*(a))
 #define         memset(x,v) memset(x, v, sizeof(x))
 #define         ask         '\n'
-#define         negmod(x,y) ((x % y) + y) % y 
-
-
-ll MOD;
-inline void modulas(ll a) {MOD = a;}
-inline void normal(ll &a) { a %= MOD; (a < 0) && (a += MOD); }
-inline ll modMul(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); return (a*b)%MOD; }
-inline ll modAdd(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); return (a+b)%MOD; }
-inline ll modSub(ll a, ll b) { a %= MOD, b %= MOD; normal(a), normal(b); a -= b; normal(a); return a; }
-inline ll modPow(ll b, ll p) { ll r = 1; while(p) { if(p&1) r = modMul(r, b); b = modMul(b, b); p >>= 1; } return r; }
-inline ll modInverse(ll a) { return modPow(a, MOD-2); }
-inline ll modDiv(ll a, ll b) { return modMul(a, modInverse(b)); }
+#define         negmod(x,y) ((x % y) + y) % y    
 
 vector<bool> isPrime(10000010, true);
 inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; ++i){
@@ -55,44 +44,29 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
+        ll n,k;
+        cin >> n >> k;
+        ll x = 1,cnt = 0;
+        while(k > x){
+            cnt ++;
+            x += (cnt + 1);
         }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
-        }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-            }
-            else
-                ar[v1[i]] = v[i];
-        }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        ll y = x - cnt;
+        y = k - y;
+        // cout << cnt << " " << y;
+        x = n - cnt - 2,y = n - y - 1;
+        string s(n,'a');
+        for(int i = 0;i < n;i ++)
+            if(i == x || i == y)
+                s[i] = 'b';
+        cout << s << "\n";
     }
+
+    
 
     return 0;
 }
+

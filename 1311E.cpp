@@ -53,45 +53,58 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
-    int t = 1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        int ar[n + 10],br[n + 10] = {0};
-        vctri v,v1;
-        for(int i = 1;i <= n;i ++){
-            cin >> ar[i],br[ar[i]] = 1;
-            if(ar[i] == 0)
-                v1.pb(i);
+        int n,d,y,x = 1;
+        cin >> n >> d;
+        ll mn = 0,mx = (n * (n - 1)) / 2;
+        y = n - 1;
+        for(int i = 2;y / i > 0;i *= 2,x ++){
+            y -= i;
+            mn += (i * x);
         }
-        for(int i = 1;i <= n;i ++){
-            if(br[i] == 0)
-                v.pb(i);
+        mn += (y * x);
+        if(d < mn || d > mx){
+            cout << "NO\n";
+            continue;
         }
-        for(int i = 0 ;i < v.size();i ++){
-            if(v[i] == v1[i]){
-                if(i == 0){
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
-                else if(i == v.size() - 1){
-                    swap(v[i],v[i - 1]);
-                    ar[v1[i]] = v[i];
-                    ar[v1[i - 1]] = v[i - 1];
-                }
-                else{
-                    swap(v[i],v[i + 1]);
-                    ar[v1[i]] = v[i];
-                }
+        int par[n],bad[n],dep[n],cnt[n];
+        iota(par,par + n,-1);
+        iota(dep,dep + n,0);
+        memset(bad,0);
+        for(int i = 0;i < n - 1;i ++)
+            cnt[i] = 1;
+        cnt[n - 1] = 0;
+        ll cur = mx;
+        while(cur > d){
+            int v = -1;
+            for(int i = 0;i < n;i ++){
+                if(cnt[i] == 0 && !bad[i] && (v == -1 || dep[v] > dep[i]))
+                    v = i;
             }
-            else
-                ar[v1[i]] = v[i];
+            int p = -1;
+            for(int i = 0;i < n;i ++){
+                if(cnt[i] < 2 && dep[i] < dep[v] - 1 && (p == -1 || dep[i] > dep[p]))
+                    p = i;
+            }
+            if(p == -1){
+                bad[v] = 1;
+                continue;
+            }
+            cnt[par[v]] --;
+            cnt[p] ++;
+            dep[v] --;
+            cur --;
+            par[v] = p;
         }
-        for(int i = 1;i <= n;i ++)
-            cout << ar[i] << " ";
+        cout << "YES\n";
+        for(int i = 1;i < n;i ++)
+            cout << par[i] + 1 << " ";
+        cout << "\n";
     }
 
     return 0;
