@@ -60,16 +60,26 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        ll ar[n];
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            cin >> ar[i];
         }
-        cout << x << ask;
+        int x = 0;
+        for(int i = 0;i < n && ar[i] == 1;i ++){
+            x ++;
+        }
+        if(x == n){
+            if(x & 1)
+                cout << "First\n";
+            else
+                cout << "Second\n";
+        }
+        else{
+            if(x & 1)
+                cout << "Second\n";
+            else
+                cout << "First\n";
+        }
 
     }
     

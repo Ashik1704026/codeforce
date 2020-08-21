@@ -53,6 +53,7 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
     int t;
@@ -60,21 +61,69 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
+        string s,s1,sub = "abacaba";
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        s1 = s;
+        int f = 1,cnt = 0;
+        for(int i = 0;i < n - 6;i ++){
+            string x = s.substr(i,7);
+            // cout << x << " ";
+            if(x == sub)
+                cnt ++;
         }
-        cout << x << ask;
+        if(cnt > 1){
+            cout << "NO\n";
+            continue;
+        }
+        else if(cnt == 1){
+            cout << "YES\n";
+            for(int i = 0;i < n;i ++)
+                if(s[i] == '?')
+                    cout << 'z';
+                else
+                    cout << s[i];
+            cout << "\n";
+        }
+        else{
+            int a = 0;
+            string z;
+            for(int i = 0;i < n - 6;i ++){
+                cnt = 0;
+                string str = s.substr(i,7);
+                for(int j = 0;j < 7;j ++){
+                    if(str[j] == '?')
+                        str[j] = sub[j];
+                }
+                if(str == sub){
+                    int x = 0;
+                    z = s;
+                    for(int j = i;j < i + 7;j ++)
+                        z[j] = sub[x ++];
+                    for(int i = 0;i < n - 6;i ++){
+                        string x = z.substr(i,7);
+                        if(x == sub)
+                            cnt ++;
+                    }
+                }
+                if(cnt == 1){
+                    a = i;
+                    break;
+                }
+            }
+            if(cnt == 1){
+                cout << "YES\n";
+                for(int i = 0;i < n;i ++)
+                    if(z[i] == '?')
+                        cout << 'z';
+                    else
+                        cout << z[i];
+                cout << "\n";
+            }
+            else
+                cout << "NO\n";
+        }
 
     }
-    
-
-
 
     return 0;
 }

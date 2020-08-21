@@ -58,19 +58,27 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int n,k,z;
+        cin >> n >> k >> z;
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        ll sum = 0,sol = 0;
+        for(int i = 0;i <= z;i ++){
+            for(int j = 0;j < k - (2 * i) + 1;j ++){
+                sol += ar[j];
+            }
+            vctri v;
+            for(int j = 0;j < k - (2 * i) + 1;j ++)
+                v.pb(ar[j] + ar[j + 1]);
+            sort(v.rbegin(),v.rend());
+            if(v.size() > 0){
+                sol += (v[0] * i);
+            }
+            sum = max(sum,sol);
+            sol = 0;
         }
-        cout << x << ask;
-
+        cout << sum << "\n";
     }
     
 

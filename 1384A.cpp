@@ -60,17 +60,20 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        string s = "";
+        for(int i = 0;i < 100;i ++)
+            s += 'a';
+        cout << s << "\n";
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int a;
+            cin >> a;
+            if(s[a] == 'a')
+                s[a] = 'b';
+            else
+                s[a] = 'a';
+            cout << s << "\n";
         }
-        cout << x << ask;
-
+        
     }
     
 

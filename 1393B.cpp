@@ -56,21 +56,62 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     fast;
     int t;
-    cin >> t;
+    // cin >> t;
+    t = 1;
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int ar[200000];
+        memset(ar,0);
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int a;
+            cin >> a;
+            ar[a] ++;
         }
-        cout << x << ask;
-
+        set<prii> s;
+        for(int i = 1;i <= 100000;i ++)
+            s.insert(mp(-ar[i],i));
+        // for(auto x : s){
+        //     prii a = x;
+        //     cout << a.F << " " << a.S << "\n";
+        // }       
+        int q;
+        cin >> q;
+        while(q -- ){
+            char ch;
+            int a;
+            cin >> ch >> a;
+            if(ch == '+'){
+                s.erase(mp(-ar[a],a));
+                ar[a] ++;
+                s.insert(mp(-ar[a],a));
+            }
+            else{
+                s.erase(mp(-ar[a],a));
+                ar[a] --;
+                s.insert(mp(-ar[a],a));
+            }
+            int y = 0;
+            int chk[10] = {0};
+            for(auto x : s){
+                if(y == 3)
+                    break;
+                prii a = x;
+                chk[y] = -a.F;
+                y ++;
+                // cout << a.F << " " << a.S << " " << " ";
+            }
+            // cout << chk[0] << " " << chk[1] << " " << chk[2] << "\n";
+            int b,c,d;
+            b = chk[0] / 2;
+            c = chk[1] / 2;
+            d = chk[2] / 2;
+            if(b + c + d >= 4)
+                cout << "YES\n";
+            else
+                cout << "NO\n";
+            // cout << "\n";
+        }
     }
     
 

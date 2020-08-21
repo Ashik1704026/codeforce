@@ -60,17 +60,24 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int ar[n + 10];
+        memset(ar,0);
+        int mx = 0;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int a;
+            cin >> a;
+            ar[a] ++;
+            mx = max(mx,ar[a]);
         }
-        cout << x << ask;
-
+        int cnt = 0;
+        for(int i = 1;i <= n;i ++){
+            if(ar[i] == mx)
+                cnt ++;
+        }
+        n -= cnt;
+        mx --;
+        int sol =max(0,n / mx - 1);
+        cout << sol << "\n";
     }
     
 

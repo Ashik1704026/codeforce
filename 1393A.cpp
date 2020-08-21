@@ -58,19 +58,10 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
+        ll n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
-        }
-        cout << x << ask;
-
+        ll x = (n / 2) + 1;
+        cout << x << "\n";
     }
     
 

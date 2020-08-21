@@ -60,17 +60,9 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
-        }
-        cout << x << ask;
-
+        for(int i = 1;i <= n;i ++)
+            cout << i << " ";
+        cout << "\n";
     }
     
 

@@ -60,21 +60,44 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        int y,x = 0,g = 1;
+        for(int i = 0;i < n - 1;i ++){
+            if(ar[i] > ar[i + 1])
+                g = 0;
         }
-        cout << x << ask;
-
+        if(g){
+            cout << "0\n";
+            continue;
+        }
+        g = 1;
+        for(int i = 0;i < n - 1;i ++){
+            if(ar[i] < ar[i + 1])
+                g = 0;
+        }
+        if(g){
+            cout << "0\n";
+            continue;
+        }
+        for(int i = n - 1;i >= 1;i --){
+            if(ar[i] <= ar[i - 1])
+                x ++,y = i;
+            else{
+                y = i;
+                break;
+            }
+        }
+        // cout << y << " ";
+        for(int i = y;i >= 1;i --){
+            if(ar[i] >= ar[i - 1])
+                x ++;
+            else
+                break;
+        }
+        cout << n - x - 1<< "\n";
     }
-    
-
-
 
     return 0;
 }

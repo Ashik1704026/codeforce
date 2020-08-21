@@ -60,21 +60,20 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int ar[50000] = {0};
+        vctri v;
+        for(int i = 0;i < 2 * n;i ++){
+            int a;
+            cin >> a;
+            if(!ar[a]){
+                v.pb(a);
+                ar[a] = 1;
+            }
         }
-        cout << x << ask;
-
+        for(int i = 0;i < n;i ++)
+            cout << v[i] << " ";
+        cout << "\n";
     }
-    
-
-
 
     return 0;
 }

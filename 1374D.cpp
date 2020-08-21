@@ -58,18 +58,38 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        ll n,k;
+        cin >> n >> k;
+        vctrl ar;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            ll a;
+            cin >> a;
+            if(a % k != 0)
+                ar.pb(k - (a % k));
         }
-        cout << x << ask;
+        if(ar.size() == 0){
+            cout << "0\n";
+            continue;
+        }
+        sort(ar.begin(),ar.end());
+        int x = 1,sol = 0,ind = - 1;
+        for(int i = 1;i < ar.size();i ++){
+            if(ar[i] == ar[i - 1])
+                x ++;
+            else if(x >= sol){
+                sol = x;
+                x = 1;
+                ind = ar[i - 1];
+            }
+            else
+                x = 1;
+        }
+        if(x >= sol){
+            ind = ar[ar.size() - 1];
+            sol = x;
+        }
+        // cout << ind << " " << sol << " ";
+        cout << k * (sol - 1) + ind + 1 << ask;
 
     }
     

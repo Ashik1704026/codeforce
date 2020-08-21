@@ -58,19 +58,21 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int n,m;
+        cin >> n >> m;
+        string str[n + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> str[i];
+        int s = 0;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            if(str[i][m - 1] == 'R')
+                s ++;
         }
-        cout << x << ask;
-
+        for(int i = 0;i < m;i ++){
+            if(str[n - 1][i] == 'D')
+                s ++;
+        }
+        cout << s << "\n";
     }
     
 

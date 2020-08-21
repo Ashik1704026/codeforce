@@ -60,16 +60,33 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int w[200] = {0};
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int a;
+            cin >> a;
+            w[a] ++;
         }
-        cout << x << ask;
+        int sol = 0,mx = 1;
+        if(n == 1){
+            cout << "0\n";
+            continue;
+        }
+        for(int i = 1;i <= 100;i ++){
+            for(int j = 1;j <= (i / 2);j ++){
+                if(j == ceil(i / 2.0)){
+                    int x = w[j] / 2;
+                    mx += x;
+                }
+                else{
+                    int x = min(w[j],w[i - j]);
+                    mx += x;
+                }
+            }
+            sol = max(sol,mx);
+            mx = 0;
+        }
+        cout << sol << "\n";
+
 
     }
     

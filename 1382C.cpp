@@ -60,17 +60,30 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        string a,b;
+        cin >> a >> b;
+        vctri v;
+        int l = 0,r = n - 1,moves = 0;
+        for(int i = n - 1;i >= 0; i --){
+            if(moves & 1){
+                if(a[r] != b[i])
+                    v.pb(1);
+                v.pb(i + 1);
+                moves ++;
+                r --;
+            }
+            else{
+                if(a[l] == b[i])
+                    v.pb(1);
+                v.pb(i + 1);
+                moves ++;
+                l ++;
+            }
         }
-        cout << x << ask;
-
+        cout << v.size() << " ";
+        for(auto x : v)
+            cout << x << " ";
+        cout << ask;
     }
     
 

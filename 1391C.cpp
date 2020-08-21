@@ -55,21 +55,23 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
+        ll a = 1000000007;
+        modulas(a);
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll x = 1;
+        for(ll i = 2;i <= n;i ++){
+            x = modMul(x,i);
         }
-        cout << x << ask;
+        ll sol = 0;
+        ll d = 1;
+        for(int i = 1;i < n;i ++)
+            d = modMul(d,2);
+        sol = modSub(x,d);
+        cout << sol << "\n";
 
     }
     

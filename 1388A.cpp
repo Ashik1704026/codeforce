@@ -60,17 +60,20 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        if(n < 31)
+            cout << "NO\n";
+        else{
+            cout << "YES\n";
+            int x = 6,y = 14,z = 10;
+            int ob = n - x - y - z;
+            if(ob == 6 || ob == 10 || ob == 14){
+                y = 15;
+                cout << x << " " << y << " " << z  << " " << ob - 1 << "\n";
+            }
+            else{
+                cout << x << " " << y << " " << z << " " << ob << "\n";
+            }
         }
-        cout << x << ask;
-
     }
     
 

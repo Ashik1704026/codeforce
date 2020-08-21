@@ -58,23 +58,39 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+       ll n,k;
+       cin >> n >> k;
+       ll ar[n];
+       for(int i = 0;i < n;i ++)
+        cin >> ar[i];
+        ll x = *max_element(ar,ar + n);
+        for(int i = 0;i < n;i ++)
+            ar[i] = x - ar[i];
+        if(k == 1){
+            for(int i = 0;i < n;i ++)
+                cout << ar[i] << " ";
+            cout << "\n";
         }
-        cout << x << ask;
+        else{
+            k --;
+            x = *max_element(ar,ar + n);
+            for(int i = 0;i < n;i ++)
+                ar[i] = x - ar[i];
+            if(k & 1){
+                for(int i = 0;i < n;i ++){
+                    cout << ar[i] << " ";
+                }
+                cout << "\n";
+            }
+            else{
+                for(int i = 0;i < n;i ++)
+                    cout << x - ar[i] << " ";
+                cout << "\n";
+            }
+        }
 
     }
     
-
-
 
     return 0;
 }

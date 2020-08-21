@@ -53,28 +53,34 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+
 int main(){
     fast;
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll l,r,m;
+        cin >> l >> r >> m;
+        ll d = r - l;
+        for(int i = l;i <= r;i ++){
+            if(m % i == 0){
+                cout << i << " " << r << " " << r << "\n";
+                break;
+            }
+            ll rd = i - (m % i);
+            if(rd <= d){
+                cout << i << " " << l << " " << l + rd << "\n";
+                break;
+            }
+            rd = (m % i);
+            if(rd <= d){
+                cout << i << " " << l + rd << " " << l << "\n";
+                break;
+            }
+            
         }
-        cout << x << ask;
 
     }
-    
-
-
 
     return 0;
 }

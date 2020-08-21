@@ -52,24 +52,72 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+vctri g[210000];
+vector<prii> edges;
+int visited[210000];
+vctri path;
+
+
+void dfs(int s){
+    visited[s] = 1;
+    for(auto x : g[s])
+        if(!visited[x])
+            dfs(x);
+    path.pb(s);
+}
+
 
 int main(){
     fast;
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int n,m;
+        cin >> n >> m;
+        memset(visited,0);
+        for(int i = 0;i <= n;i ++)
+            g[i].clear();
+        edges.clear();
+        while(m --){
+            int a,u,v;
+            cin >> a >> u >> v;
+            if(a)
+                g[u].pb(v);
+            else
+                edges.pb(mp(u,v));
         }
-        cout << x << ask;
+        for(int i = 1;i <= n;i ++)
+            if(!visited[i])
+                dfs(i);
+        reverse(path.begin(),path.end());
+        // for(auto x : path)
+        //     cout << x << " ";
+        vctri revpath(n + 10);
+        for(int i = 0;i < n;i ++)
+            revpath[path[i]] = i;
+        int ok = 1;
+        for(int i = 1;i <= n;i ++){
+            for(auto x : g[i])
+                if(revpath[i] > revpath[x])
+                    ok = 0;
+        }
+        if(!ok)
+            cout << "NO\n";
+        else{
+            cout << "YES\n";
+            for(int i = 0;i < edges.size();i ++){
+                int a = edges[i].F;
+                int b = edges[i].S;
+                if(revpath[a] < revpath[b])   
+                    cout << a << " " << b << "\n";
+                else
+                    cout << b << " " << a << "\n";
+            }
+            for(int i = 1;i <= n; i++){
+                for(auto x : g[i])
+                    cout << i << " " << x << "\n";
+            }
+        }
 
     }
     
@@ -78,3 +126,4 @@ int main(){
 
     return 0;
 }
+

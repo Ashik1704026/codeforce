@@ -62,15 +62,16 @@ int main(){
         cin >> n;
         string s;
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        s = '#' + s;
+        map<ll,ll> m;
+        m[0] ++;
+        ll sum = 0,sol = 0;
+        for(int i = 1;i <= n;i ++){
+            sum += s[i] - '0';
+            sol += m[sum - i];
+            m[sum - i] ++;
         }
-        cout << x << ask;
-
+        cout << sol << "\n";
     }
     
 

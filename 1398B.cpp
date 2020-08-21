@@ -58,19 +58,24 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
         string s;
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
+        int sol = 0,x = 0;
+        vctrl v;
+        for(int i = 0;i < s.size();i ++){
+            if(s[i] == '1')
                 x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            else{
+                v.pb(x);
+                x = 0;
+            }
         }
-        cout << x << ask;
-
+        if(x > 0)
+            v.pb(x);
+        sort(v.rbegin(),v.rend());
+        for(int i = 0;i < v.size();i += 2)
+            sol += v[i];
+        cout << sol << "\n";
     }
     
 

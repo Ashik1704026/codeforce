@@ -55,22 +55,50 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        ll n,m,d;
+        cin >> n >> d >> m;
+        vctrl a,b,da;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            ll c;
+            cin >> c;
+            if(c > m)
+                b.pb(c);
+            else
+                a.pb(c);
         }
-        cout << x << ask;
-
+        sort(a.begin(),a.end(),greater<int>());
+        sort(b.begin(),b.end(),greater<int>());
+        for(int i = 1;i < a.size();i ++)
+            a[i] += a[i - 1];
+        for(int i = 1;i < b.size();i ++)
+            b[i] += b[i - 1];
+        if(b.size() == 0){
+            cout << a[a.size() - 1] << "\n";
+            return 0;
+        }
+        for(int i = b.size();i <= n;i ++)
+            b.pb(b[b.size() - 1]);
+        ll sol = 0,s = 0;
+        for(int i = 0;i <= a.size();i ++){
+            if(i == 0){
+                int x = (n - 1) / (d + 1);
+                s = b[x];
+                sol = max(s,sol);
+                // cout << sol << " ";
+                continue;
+            }
+            s = 0;
+            s = a[i - 1];
+            int x = (n - i - 1) / (d + 1);
+            s += b[x];
+            sol = max(sol,s);
+            // cout << sol << " ";
+        }
+        cout << sol << "\n";
+        
     }
     
 

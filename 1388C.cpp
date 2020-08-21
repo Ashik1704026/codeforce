@@ -51,6 +51,30 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
+ll n,m,net = 0;
+ll p[200000],h[200000];
+vctrl g[200000];
+ll visited[200000],gd[200000],res = 1;
+
+void dfs(int s,int pa){
+    int sum_g = 0;
+    for(auto x : g[s]){
+        if(x != pa){
+            dfs(x,s);
+            sum_g += gd[x];
+            p[s] += p[x];
+        }
+    }
+    if(p[s] + h[s] & 1)
+        res = 0;
+    gd[s] = (p[s] + h[s]) / 2;
+    if(gd[s] < 0 || gd[s] > p[s])
+        res = 0;
+    if(sum_g > gd[s])
+        res = 0;
+}
+
+
 
 
 int main(){
@@ -58,18 +82,33 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        cin >> n >> m;
+        for(int i = 1;i <= n;i ++)
+            cin >> p[i];
+        for(int i = 1;i <= n;i ++)
+            cin >> h[i];
+        for(int i = 0;i < n - 1;i ++){
+            int a,b;
+            cin >> a >> b;
+            g[a].pb(b);
+            g[b].pb(a);
         }
-        cout << x << ask;
+        dfs(1,0);
+        // for(int i = 1;i <= n;i ++)
+        //     cout << p[i] << " ";
+        
+        if(res)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
+        for(int i = 0;i <= n;i ++){
+            gd[i] = 0;
+            p[i] = 0;
+            h[i] = 0;
+        }
+        res = 1;
+        for(int i = 0;i <= n;i ++)
+            g[i].clear();
 
     }
     

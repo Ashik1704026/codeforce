@@ -52,6 +52,18 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+int sol(const string &s,char c){
+    if(s.size() == 1)
+        return s[0] != c;
+    int mid = s.size() / 2;
+    int left = sol(string(s.begin(),s.begin() + mid),c + 1);
+    left += mid - count(s.begin() + mid,s.end(),c);
+    int right = sol(string(s.begin() + mid,s.end()),c + 1);
+    right += mid - count(s.begin(),s.begin() + mid,c);
+    return min(left,right);
+}
+
+
 
 int main(){
     fast;
@@ -61,20 +73,9 @@ int main(){
         int n;
         cin >> n;
         string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
-        }
-        cout << x << ask;
-
+        cin >> s;  
+        cout << sol(s,'a') << "\n";
     }
-    
-
-
 
     return 0;
 }

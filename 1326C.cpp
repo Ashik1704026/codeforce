@@ -55,22 +55,31 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        modulas(998244353);
+        int n,k;
+        cin >> n >> k;
+        prii p[n];
+        prii tmp[n];
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            cin >> p[i].F;
+            p[i].S = i + 1;
         }
-        cout << x << ask;
-
+        sort(p,p + n);
+        reverse(p,p + n);
+        ll s = 0;
+        for(int i = 0;i < k;i ++)
+            s += p[i].F;
+        ll x = 1;
+        int ind[n];
+        for(int i = 0;i < k;i ++)
+            ind[i] = p[i].S;
+        sort(ind,ind + k);
+        for(int i = 1;i < k;i ++)
+            x = modMul(x,abs(ind[i] - ind[i - 1]));
+        cout << s << " " << x << "\n";
     }
     
 

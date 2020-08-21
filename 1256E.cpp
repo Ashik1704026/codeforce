@@ -55,22 +55,44 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        prll ar[n];
+        ll dp[n + 100];
+        vctri v(n + 10);
+        for(int i = 0;i < n + 100;i ++)
+            dp[i] = 10e9,v[i] = - 1;
+        dp[0] = 0;
+        v[0] = 0;
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i].F,ar[i].S = i;
+        sort(ar,ar + n);
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            for(int j = 3;j <= 5 && i + j <= n;j ++){
+                ll diff = (dp[i] + ar[i + j - 1].F - ar[i].F);
+                if(dp[i + j] > diff){
+                    dp[i + j] = diff;
+                    v[i + j] = i;
+                }
+                // dp[i + j] = min(dp[i + j],(dp[i] + ar[i + j - 1] - ar[i]));
+                // cout << dp[i + j] << " " << dp[i] << " " << ar[i + j - 1] << " " << ar[i] << "\n";
+            }
         }
-        cout << x << ask;
-
+        int cur = n;
+        int cnt = 1;
+        int team[n + 10];
+        while(cur != 0){
+            for(int i = cur - 1;i >= v[cur];i --)
+                team[ar[i].S] = cnt;
+            cnt ++;
+            cur = v[cur];
+        }
+        cout << dp[n] << " " << cnt - 1 << "\n";
+        for(int i = 0;i < n;i ++)
+            cout << team[i] << " ";
     }
     
 

@@ -58,19 +58,28 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int n,m;
+        cin >> n >> m;
+        int ar[100000];
+        memset(ar,0);
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int a;
+            cin >> a;
+            ar[a] = 1;
         }
-        cout << x << ask;
-
+        int k = 0,d = 0;
+        for(int i = 0;i < m;i ++){
+            int b;
+            cin >> b;
+            if(ar[b] == 1){
+                k = 1;
+                d = b;
+            }
+        }
+        if(k)
+            cout << "YES\n" << k << " " << d << ask;
+        else
+            cout << "NO\n";
     }
     
 

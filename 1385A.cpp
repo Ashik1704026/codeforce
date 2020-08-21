@@ -58,23 +58,30 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
+        ll ar[5];
+        cin >> ar[0] >> ar[1] >> ar[2];
+        sort(ar,ar + 3);
+        int x = 1;
+        for(int i = 0;i < 2;i ++)
+            if(ar[i] != ar[i + 1])
                 x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        if(x == 3)
+            cout << "NO\n";
+        else if(x == 2){
+            if(ar[0] == ar[1])
+                cout << "NO\n";
+            else{
+                cout << "YES\n";
+                cout << ar[2] << " " << ar[0] << " 1\n";
+            } 
         }
-        cout << x << ask;
-
+        else{
+            cout << "YES\n";
+            cout << ar[0] << " " <<ar[0] << " " <<ar[0] << "\n";
+        }
+        
+        
     }
-    
-
-
 
     return 0;
 }

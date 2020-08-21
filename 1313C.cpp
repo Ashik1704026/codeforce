@@ -55,26 +55,60 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll m[n + 10];
+        memset(m,0);
+        for(int i = 1;i <= n;i ++)
+            cin >> m[i];
+        ll l[n + 10],r[n + 10],mn[n + 10];
+        mn[0] = 0;
+        ll sl[n + 10],rl[n + 10];
+        memset(sl,0);
+        memset(rl,0);
+        for(int i = 1;i <= n;i ++){
+            int j = i - 1;
+            while(j > 0 && m[j] > m[i]){
+                j = mn[j];
+            }
+            mn[i] = j;
+            sl[i] = (sl[j] + (m[i] * (i - j)));
         }
-        cout << x << ask;
-
+        mn[n + 1] = n + 1; 
+        for(int i = n;i > 0;i --){
+            int j = i + 1;
+            while(j <= n && m[j] > m[i])
+                j = mn[j];
+            mn[i] = j;
+            rl[i] = rl[j] + (m[i] * (j - i));
+        }
+        ll ans = 0,ind = 0;
+        for(int i = 1;i <= n;i ++){
+            if(rl[i] + sl[i] - m[i] > ans){
+                ans = rl[i] + sl[i] - m[i];
+                ind = i;
+            }
+        }
+        vctrl v;
+        ll x = m[ind];
+        for(int i = ind;i > 0;i --){
+            x = min(x,m[i]);
+            v.pb(x);
+        }
+        reverse(v.begin(),v.end());
+        for(auto x : v) 
+            cout << x << " ";
+        x = m[ind];
+        for(int i = ind + 1;i <= n;i ++){
+            x = min(x,m[i]);
+            cout << x << " ";
+        }
+        
     }
     
-
-
 
     return 0;
 }

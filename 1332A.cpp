@@ -58,18 +58,60 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll a,b,c,d,x,y,x1,y1,x2,y2;
+        cin >> a >> b >> c >> d >> x >> y >> x1 >> y1 
+        >> x2 >> y2;
+        int f = 1;
+        if(x1 == x2 && y1 == y2)
+            f = 0;
+        if(x1 == x && x == x2 && (a || b))
+            f = 0;
+        if(y == y1 && y == y2 && (c || d))
+            f = 0;
+        if(a > b){
+            a -= b;
+            x -= a;
+            if(x < 0 && x1 < 0){
+                if(abs(x) > abs(x1))
+                    f = 0;
+            }
+            else if(x < x1)
+                f = 0;
         }
-        cout << x << ask;
+        else{
+            b -= a;
+            x += b;
+            if(x2 < 0 && x < 0){
+                if(abs(x) < abs(x2))
+                    f = 0;
+            }
+            else if(x > x2)
+                f = 0;
+        } 
+        if(c > d){
+            c -= d;
+            y -= c;
+            if(y1 < 0 && y < 0){
+                if(abs(y) > abs(y1))
+                    f = 0;
+            }
+            else if(y < y1)
+                f = 0;
+        }
+        else{
+            d -= c;
+            y += d;
+            if(y < 0 && y2 < 0){
+                if(abs(y) < abs(y2))
+                    f = 0;
+            }
+            else if(y > y2)
+                f = 0;
+        }
+        if(f)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
 
     }
     

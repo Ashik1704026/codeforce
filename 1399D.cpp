@@ -62,15 +62,45 @@ int main(){
         cin >> n;
         string s;
         cin >> s;
-        int x = 0;
+        set<int> a,b,c;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            if(s[i] == '0')
+                a.insert(i);
+            else
+                b.insert(i);
+            c.insert(i);
         }
-        cout << x << ask;
-
+        int res[n + 10];
+        int k = 0;
+        set<int> :: iterator it;
+        while(!c.empty()){
+            k ++;
+            int cur = *c.begin();
+            while(1){
+                res[cur] = k;
+                int nxt = -1;
+                c.erase(cur);
+                if(s[cur] == '0'){
+                    a.erase(cur);
+                    it = b.upper_bound(cur);
+                    if(it != b.end())
+                        nxt = *it;
+                }
+                else{
+                    b.erase(cur);
+                    it = a.upper_bound(cur);
+                    if(it != a.end())
+                        nxt = *it;
+                }
+                if(nxt == -1)
+                    break;
+                cur = nxt;
+            }
+        }
+        cout << k << "\n";
+        for(int i = 0;i < n;i ++)
+            cout << res[i] << " ";
+        cout << "\n";
     }
     
 

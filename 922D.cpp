@@ -53,28 +53,40 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+vector<string> vs;
+string vh = "";
+ll tot(string xy){
+    ll s = 0,tmp = 0;
+    for(auto x : xy){
+        if(x == 's')
+            tmp ++;
+        else
+            s += tmp;
+    }
+    return s;
+}
+ll cmp(string x,string y){
+    return tot(x + y) > tot(y + x);
+}
+
 int main(){
     fast;
-    int t;
-    cin >> t;
+    int t = 1;
+    // cin >> t;
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            string s;
+            cin >> s;
+            vs.pb(s);
         }
-        cout << x << ask;
-
+        sort(vs.begin(),vs.end(),cmp);
+        for(auto x : vs)
+            vh += x;
+        cout << tot(vh);
     }
     
-
-
 
     return 0;
 }

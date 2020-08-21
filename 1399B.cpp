@@ -60,16 +60,28 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        ll a[n],b[n];
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        for(int i = 0;i < n;i ++)
+            cin >> b[i];
+        ll x = *min_element(a,a + n);
+        ll y = *min_element(b,b + n);
+        ll sol = 0;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            if(a[i] > x && b[i] > y){
+                ll d = min(a[i] - x,b[i] - y);
+                sol += d;
+                a[i] -= d,b[i] -= d;
+                sol += (a[i] - x);
+                sol += (b[i] - y);
+            }
+            else{
+                sol += (a[i] - x);
+                sol += (b[i] - y);
+            }
         }
-        cout << x << ask;
+        cout << sol << "\n";
 
     }
     

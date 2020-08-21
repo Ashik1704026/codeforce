@@ -58,19 +58,30 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
         string s;
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int mx = 0;
+        for(char a = '0';a <= '9';a ++){
+            for(char b = '0';b <= '9';b ++){
+                int x = 0;
+                char c = a,d = b;
+                for(int i = 0;i < s.size();i ++){
+                    if(s[i] == c){
+                        x ++;
+                        swap(c,d);
+                    }
+                }
+                if(x & 1)
+                    x --;
+                mx = max(mx,x);
+            }
+            int y = 0;
+            for(int i = 0;i < s.size();i ++)
+                if(s[i] == a)
+                    y ++;
+            mx = max(mx,y);
         }
-        cout << x << ask;
-
+        cout << s.size() - mx << "\n";
     }
     
 

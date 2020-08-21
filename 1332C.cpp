@@ -58,19 +58,24 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
+        ll n,k;
+        cin >> n >> k;
         string s;
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        mapci m[k + 100];
+        ll x = n / k;
+        for(int i = 0;i < n;i ++)
+            m[i % k][s[i]] ++;
+        ll sol = 0;
+        for(int i = 0;i < k;i ++){
+            int mx1 = 0,mx2 = 0;
+            for(char a = 'a';a <= 'z';a ++){
+                mx1 += m[i][a] + m[k - i - 1][a];
+                mx2 = max(mx2,(m[k - i - 1][a] + m[i][a]));
+            }
+            sol += (mx1 - mx2);
         }
-        cout << x << ask;
-
+        cout << sol / 2<< "\n";
     }
     
 

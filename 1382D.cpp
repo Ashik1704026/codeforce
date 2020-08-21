@@ -53,6 +53,25 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+int sub(vctri v,int n,int sum){
+    int dp[n + 10][sum + 10];
+    for(int i = 0;i <= n;i ++)
+        dp[i][0] = 1;
+    for(int i = 1;i <= sum;i ++)
+        dp[0][i] = 0;
+    for(int i = 1;i <= n;i ++){
+        for(int j = 1;j <= sum;j ++){
+            if(j < v[i - 1])
+                dp[i][j] = dp[i - 1][j];
+            else{
+                dp[i][j] = dp[i - 1][j] || dp[i - 1][j - v[i - 1]]; 
+            } 
+        }
+    }
+    return dp[n][sum];
+}
+
+
 int main(){
     fast;
     int t;
@@ -60,17 +79,27 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int ar[2 * n];
+        for(int i = 0;i < 2 * n;i ++)
+            cin >> ar[i];
+        vctri v;
+        int mx = 0,ind = 0;
+        for(int i = 0;i < 2 * n;){
+            int cur = ar[i];
+            int cnt = 1;
+            i ++;
+            while(i < 2 * n && cur > ar[i]){
+                cnt ++;
+                i ++;
+            }
+            v.pb(cnt);
         }
-        cout << x << ask;
-
+        // for(auto x : v)
+        //     cout << x << " ";
+        if(sub(v,v.size(),n))
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     
 
@@ -78,3 +107,4 @@ int main(){
 
     return 0;
 }
+

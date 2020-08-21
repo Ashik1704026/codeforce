@@ -58,19 +58,25 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
+        int n,k;
+        cin >> n >> k;
+        ll ar[2000] = {0};
+        int ok = 1;
         for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+            int cnt = 0;
+            ll a;
+            cin >> a;
+            while(a){
+                ar[cnt] += (a % k);
+                a /= k;
+                if(ar[cnt] > 1) ok = 0;
+                cnt ++;
+            }
         }
-        cout << x << ask;
-
+        if(ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     
 

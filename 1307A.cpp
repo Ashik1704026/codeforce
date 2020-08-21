@@ -58,19 +58,24 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int n,d;
+        cin >> n >> d;
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        ll s = ar[0];
+        for(int i = 1;i < n;i ++){
+            if(ar[i] == 0)
+                continue;
+            int x = d / i;
+            if(x >= ar[i])
+                s += ar[i],d -= (ar[i] * i);
+            else{
+                s += x;
+                d -= (x * i);
+            }
         }
-        cout << x << ask;
-
+        cout << s << "\n";
     }
     
 

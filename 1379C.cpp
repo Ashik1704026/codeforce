@@ -58,19 +58,28 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll n,m;
+        cin >> n >> m;
+        ll a[m + 10],b[m + 10],x[m + 10];
+        for(int i = 0;i < m;i ++)
+            cin >> a[i] >> b[i],x[i] = a[i];
+        sort(x,x + m);
+        ll sum[m + 10] = {0};
+        for(int i = m - 1;i >=0 ;i --)
+            sum[i] =sum[i + 1] + x[i];
+        ll sol = 0;
+        if(n <= m)
+            sol = sum[m - n];
+        for(int i = 0;i < m;i ++){
+            int l = lower_bound(x,x + m,b[i]) - x;
+            int diff = m - l + 1;
+            // cout << l << " " << diff << "\n";
+            if(n >= diff)
+                sol = max(sol,sum[l] + (n - diff) * b[i] + ((a[i] > b[i]) ? b[i] : a[i]));
+            // cout << sum[l] << " " <<  (n - diff) * b[i] << " " << ((a[i] > b[i]) ? b[i] : a[i]) << " " <<
+            // (sum[l] + ((n - diff) * b[i]) + ((a[i] > b[i]) ? b[i] : a[i])) << "\n";
         }
-        cout << x << ask;
-
+        cout << sol << "\n";
     }
     
 

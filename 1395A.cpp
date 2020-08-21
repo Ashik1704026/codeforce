@@ -58,19 +58,26 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll r,g,b,w;
+        cin >> r >> g >> b >> w;
+        int f = 1;
+        int s = (r % 2) + (g % 2) + (b % 2);
+        if(s == 2){
+            if(r && g && b){
+                if(w & 1)
+                    f = 1;
+                else 
+                    f = 0;
+            }
+            else
+                f = 0;
         }
-        cout << x << ask;
-
+        else if(s == 1 && (w % 2 == 1))
+            f = 0;
+        if(f)
+            cout << "Yes\n";
+        else
+            cout << "No\n"; 
     }
     
 

@@ -60,17 +60,18 @@ int main(){
     while(t --){
         int n;
         cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
-        }
-        cout << x << ask;
-
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        sort(ar,ar + n);
+        int f = 1;
+        for(int i = 1;i < n;i ++)
+            if(ar[i] - ar[i - 1] > 1)
+                f = 0;
+        if(f)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     
 

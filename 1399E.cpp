@@ -51,6 +51,28 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
+vctri g[200000];
+int leaf[200000];
+ll par[200000];
+
+
+void dfs(int s,int p){
+    par[s] = p;
+    if(g[s].size() == 1)
+        leaf[s] = 1;
+    for(auto x : g[s]){
+        if(x == p)
+            continue;
+        dfs(x,s);
+        leaf[s] += leaf[x];
+    }
+}
+
+
+ll getdif(ll s,ll lf){
+    return (lf * 1LL * ((s / 2) - s));
+}
+
 
 
 int main(){
@@ -58,19 +80,55 @@ int main(){
     int t;
     cin >> t;
     while(t --){
-        int n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        ll n,s;
+        cin >> n >> s;
+        map<prll,ll> w;
+        for(int i = 0;i < n - 1;i ++){
+            ll a,b,c;
+            cin >> a >> b >> c;
+            g[a].pb(b);
+            g[b].pb(a);
+            w[mp(a,b)] = c;
+            w[mp(b,a)] = c;
         }
-        cout << x << ask;
-
+        dfs(1,0);
+        // for(int i = 1;i <= n;i ++)
+        //     cout << leaf[i] <<  " ";
+        // cout << "\n";
+        set<prll> dif;
+        ll sum = 0;
+        for(int i = 2;i <= n;i ++){
+            int u = i;
+            int v = par[u];
+            ll curw = w[mp(v,u)];
+            ll lf = leaf[u];
+            sum += (lf *1LL* curw);
+            dif.insert(mp(getdif(curw,lf),u));
+            // value[u] = curw;
+        }
+        // cout << sum << "\n";
+        // for(auto x : dif){
+        //     cout << x.F << " " << x.S << "\n";
+        // }
+        int ans = 0;
+        while(sum > s){
+            prll x = *dif.begin();
+            ll f = x.F;
+            ll id = x.S;
+            sum += f;
+            dif.erase(x);
+            int u = id;
+            int v = par[u];
+            w[mp(v,u)] /= 2;
+            ll curw = w[mp(v,u)];
+            ll lf = leaf[u];
+            dif.insert(mp(getdif(curw,lf),u));
+            ans ++;
+        }
+        cout << ans << "\n";
+        for(int i = 0;i <= n;i ++)
+            g[i].clear(),leaf[i] = 0,par[i] = 0;
+        
     }
     
 

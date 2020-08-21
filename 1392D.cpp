@@ -62,19 +62,34 @@ int main(){
         cin >> n;
         string s;
         cin >> s;
-        int x = 0;
-        for(int i = 0;i < n;i ++){
-            if(s[i] == '(')
-                x ++;
-            else if(x > 0 && s[i] == ')')
-                x --;
+        int cnt = 0;
+        while(s.size() && s[0] == s.back()){
+            cnt ++;
+            s.pop_back();
         }
-        cout << x << ask;
+        if(s.size() == 0){
+            if(cnt <= 2)
+                cout << "0\n";
+            else
+                cout << (cnt + 2) / 3 << "\n";
+        }
+        else{
+            int sol = 0;
+            cnt ++;
+            for(int i = 0;i < s.size() - 1;i ++){
+                if(s[i] != s[i + 1]){
+                    sol += (cnt / 3);
+                    cnt = 1;
+                }
+                else
+                    cnt ++;
+            }
+            sol += (cnt / 3);
+            cout << sol << "\n";
+        }
 
     }
     
-
-
 
     return 0;
 }
