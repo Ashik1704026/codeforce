@@ -57,37 +57,39 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     // fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
-        }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
-        }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
+        int n;
+        cin >> n;
+        int u[n + 10];
+        ll s[n + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> u[i];
+        for(int i =0 ;i < n;i ++)
+            cin >> s[i];
+        vctrl us[n + 10];
+        ll sol[n + 10];
+        memset(sol,0);
+        for(int i = 0;i < n;i ++)
+            us[u[i]].pb(s[i]);
+        for(int i = 1;i <= n;i ++)
+            sort(us[i].begin(),us[i].end(),greater<int>());
+        for(int i = 1;i <= n;i ++){
+            for(int j = 1;j < us[i].size();j ++){
+                us[i][j] += us[i][j - 1]; 
+            }
 
-        
+        }
+        for(int i = 1;i <= n;i ++){
+            int x = us[i].size();
+            for(int j = 1;j <= x;j ++){
+                int y = x % j;
+                sol[j] += us[i][x - y - 1];
+            }
+        }
+        for(int i = 1;i <= n;i ++)
+            cout << sol[i] << " ";
+        cout << "\n";
     }
     
 

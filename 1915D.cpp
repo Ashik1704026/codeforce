@@ -55,38 +55,69 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int a[n  +10],b[n + 10];
+        for(int i = 1;i <= n;i ++)
+            cin >> a[i];
+        for(int i = 1;i <= n;i ++)
+            cin >> b[i];
+        ll pre[n + 10],suf[n + 10];
+        ll sump[n + 10][n + 10];
+        for(int i = 0;i <= n + 8;i ++){
+            memset(sump[i],0);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        memset(pre,0);
+        memset(suf,0);
+        for(int i = 1;i <= n;i ++)
+            pre[i] = pre[i - 1] + a[i] *1LL* b[i];
+        for(int i = n;i >= 1;i --)
+            suf[i] = suf[i + 1] + a[i] *1LL* b[i];
+        for(int i = n;i >= 1;i --){
+            for(int j = 1;j <= n;j ++)
+                sump[i][j] = b[j] *1LL* a[i];
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        for(int i = 1;i <= n;i ++){
+            for(int j = i;j <= n;j ++)
+                sump[i][j] = b[j] *1LL* a[i];
+        }
+        for(int i = 1;i <= n;i ++){
+            int x = 0;
+            for(int j = 2;j <= i;j ++){
+                sump[i- j + 1][j] += sump[i - x][j - 1]; 
+                x ++;
+            }
+        }
+        for(int i = 2;i <= n;i ++){
+            int x = 0;
+            for(int j = i;j <= n;j ++){
+                sump[n - x][j] += sump[n - x +1][j - 1];
+                x ++;
+            }
+        }
+        ll s = 0,mx = 0;
+        for(int i = 1;i <= n;i ++){
+            for(int j = n;j >= i;j --){
+                mx += pre[i - 1];
+                mx += suf[j + 1];
+                mx += (sump[i][j] - sump[j + 1][i - 1]);
+                s = max(s,mx);
+                // cout << mx << " ";
+                mx = 0;
+            }
+        }
+        cout << s << "\n";
+        // cout << "\n";
+        // for(int i = 1;i <= n;i ++){
+        //     for(int j = 1;j <= n;j ++)
+        //         cout << sump[i][j] << " ";
+        //     cout << "\n"; 
+        // }
+        
         
     }
     

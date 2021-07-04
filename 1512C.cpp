@@ -55,39 +55,69 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int a,b;
+        cin >> a >> b;
+        string s;
+        cin >> s;
+        int ok = 1;
+        if(a % 2 && b % 2)
+            ok = 0;
+        int n = a + b;
+        if(a % 2){
+            if(s[n / 2] == '1')
+                ok = 0;
+            else
+                s[n / 2] = '0';
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        if(b % 2){
+            if(s[n / 2] == '0')
+                ok = 0;
+            else
+                s[n / 2] = '1';
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        for(int i = 0;i < n;i ++){
+            if(s[i] == '0'){
+                if(s[n - i - 1] != '1')
+                    s[n - i - 1] = '0';
+                else
+                    ok = 0;
+            }
+            if(s[i] == '1'){
+                if(s[n - i - 1] != '0')
+                    s[n - i - 1] = '1';
+                else
+                    ok = 0;
+            }
+        }
+        int aa = 0,bb = 0;
+        for(int i = 0;i < n;i ++){
+            if(s[i] == '0')
+                aa ++;
+            else if(s[i] == '1')
+                bb ++;
+        }
+        for(int i = 0;i < n;i ++){
+            if(s[i] == '?'){
+                if(aa < a){
+                    s[i] = '0';
+                    s[n - i - 1] = '0';
+                    aa += 2;
+                }
+                else if(bb < b){
+                    s[i] = '1';
+                    s[n - i - 1] = '1';
+                    bb += 2;
+                }
+            }
+        }
+        if(ok && aa == a && bb == b)
+            cout << s << "\n";
+        else
+            cout << "-1\n";        
     }
     
 

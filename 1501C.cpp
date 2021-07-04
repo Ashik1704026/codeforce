@@ -55,39 +55,34 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int a[n + 10];
+        for(int i = 1;i <= n;i ++)
+            cin >> a[i];
+        int solx[5000050],soly[5000050];
+        memset(solx,0);
+        memset(soly,0);
+        for(int i = 1;i <= n;i ++){
+            for(int j = i + 1;j <= n;j ++){
+                int d = a[i] + a[j];
+                if(solx[d] != i && solx[d] != j && soly[d] != i && soly[d] != j && solx[d] && soly[d]){
+                    cout << "YES\n";
+                    cout << i << " " << j << " "
+                        << solx[d] << " " << soly[d] << "\n";
+                    return 0;
+                }
+                else{
+                    solx[d] = i;
+                    soly[d] = j;
+                }
+            }
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
-        }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        cout << "NO\n";
     }
     
 

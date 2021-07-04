@@ -55,39 +55,47 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        string a,b;
+        cin >> a >> b;
+        int cnt[2][n + 10];
+        int x = 0,y = 0;
+        for(int i = 0;i < n;i ++){
+            if(a[i] == '0')
+                x ++;
+            else
+                y ++;
+            cnt[0][i] = x;
+            cnt[1][i] = y;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int ok = 1;
+        int s = 0;
+        // for(int i = 0;i < n;i ++)
+            // cout << cnt[0][i] << " " << cnt[1][i] << "\n";
+        for(int i = n - 1;i >= 0;i --){
+            if(s % 2){
+                if(a[i] == '0')
+                    a[i] = '1';
+                else
+                    a[i] = '0';
+            }
+            if(a[i] != b[i]){
+                if(cnt[0][i] != cnt[1][i])
+                    ok = 0;
+                
+                s ++;
+            }
+            // cout << ok << " ";
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        if(ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     
 

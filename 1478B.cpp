@@ -1,3 +1,38 @@
+// #include<bits/stdc++.h>
+// using namespace std;
+ 
+// const int maxn=207;
+// int t,d,q;
+// bool dp[maxn];
+// int main(){
+//     ios::sync_with_stdio(false);
+//     cin.tie(0), cout.tie(0);
+//     cin>>t;
+//     while (t--){
+//         memset(dp,0,sizeof(dp));
+//         dp[0]=1;
+//         cin>>q>>d;
+//         if (!d) d+=10;
+//         int mx=d*10;
+//         for (int i=0;10*i+d<=mx;++i){
+//             for (int j=0;10*i+d+j<=mx;++j){
+//                 dp[10*i+d+j]|=dp[j];
+//             }
+//         }
+//         // while (q--){
+//         //     int u;
+//         //     cin>>u;
+//         //     if (u>=mx||dp[u]) cout<<"YES\n";
+//         //     else cout<<"NO\n";
+//         // }
+//         for(int i = 0;i < 100;i ++)
+//             cout << dp[i] << " " << i << "\n";
+//     }
+//     return 0;
+// }
+
+
+
 // MD. Ashiqur Rahman
 #include<bits/stdc++.h>
 using namespace std;
@@ -55,38 +90,28 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int q,d;
+        cin >> q >> d;
+        bitset<1000> bit;
+        bit[0] = bit[d] = 1;
+        for(int i = d;i <= d * 100 + 9;i += 10){
+            bit[i] = 1;
+            bit = bit | (bit << d);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        while(q --){
+            ll a;
+            cin >> a;
+            if(a >= d * 10)
+                cout << "YES\n";
+            else if(bit[a])
+                cout << "YES\n";
+            else
+                cout << "NO\n";
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
         
     }
     

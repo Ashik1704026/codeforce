@@ -53,40 +53,44 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+ll fct(ll a){
+    if(a == 0)
+        return 1;
+    ll s = 1;
+    for(int i = 1;i <= a;i ++)
+        s = modMul(s,i);
+    return s;
+}
+
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int k,n;
+        cin >> n >> k;
+        int a[n];
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        sort(a,a + n,greater<int>());
+        int x = 1;
+        for(int i = k - 2;i >= 0;i --){
+            if(a[i] == a[k - 1])
+                x ++;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int y = x;
+        for(int i = k;i < n;i ++){
+            if(a[i] == a[k - 1])
+                x ++;
+            // cout << a[i] << " " << a[k - 1] << " ";
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        modulas(1000000007);
+        ll c = fct(x);
+        ll d = modMul(fct(y),fct(x - y));
+        // cout << x << " " << y << "\n";
+        // cout << c << " " << d << "\n";
+        cout << modDiv(c,d) << "\n";
         
     }
     

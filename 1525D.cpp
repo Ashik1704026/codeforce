@@ -55,39 +55,43 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int ar[n];
+        for(int i = 0;i < n;i ++)
+            cin >> ar[i];
+        vctrl occ,emp;
+        for(int i = 0;i < n;i ++){
+            if(ar[i] == 1)
+                occ.pb(i);
+            else
+                emp.pb(i);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int ln1,ln2;
+        ln1 = occ.size();
+        ln2 = emp.size();
+        if(ln1 == 0){
+            cout << "0\n";
+            return 0;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
+        ll dp[ln1][ln2];
+        for(int i = 0;i < ln1;i ++){
+            for(int j = 0;j < ln2;j ++)
+                dp[i][j] = 1000000000;
+        }
+        dp[0][0] = abs(occ[0] - emp[0]);
+        for(int i = 1;i < ln2;i ++)
+            dp[0][i] = min(dp[0][i - 1],abs(occ[0] - emp[i]));
+        for(int i = 1;i < ln1;i ++){
+            for(int j = i;j < ln2;j ++)
+                dp[i][j] = min(dp[i][j - 1],dp[i - 1][j - 1] + abs(occ[i]- emp[j]));
+        }
+        cout << dp[ln1 - 1][ln2 - 1] << "\n";
 
-        
     }
     
 

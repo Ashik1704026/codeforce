@@ -53,41 +53,39 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+double calc(ll a,ll b,ll c, ll d){
+    ll x = sqr(a - c);
+    ll y = sqr(b - d);
+    return sqrt(((x + y) * 1.00000000));
+}
+
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        ll xx[2 * n + 10],yy[2 * n + 10];
+        int a = 0,b = 0;
+        for(int i = 0;i < 2 * n;i ++){
+            ll x,y;
+            cin >> x >> y;
+            if(x == 0)
+                yy[a ++] = abs(y);
+            else
+                xx[b ++] = abs(x);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        sort(xx,xx + n);
+        sort(yy,yy + n);
+        double ans = 0.0;
+        for(int i = 0;i < n;i ++){
+            ll y = yy[i];
+            ll x = xx[i];
+            ans += calc(x,0,0,y);
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        printf("%.15lf\n",ans);
     }
     
 

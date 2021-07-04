@@ -52,42 +52,50 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
+ll prclc[200010][15];
+
+void pre(){
+    ll clc[15];
+    for(char a = '0';a <= '9';a ++){
+        memset(clc,0);
+        clc[a - '0'] = 1;
+        ll sol = 1;
+        for(int i = 1;i <= 200005;i ++){
+            int tmp = 0;
+            if(clc[9]){ 
+                sol = modAdd(sol,clc[9]);
+                tmp = clc[9];
+                clc[9] = 0;
+            }
+            for(int j = 8;j >= 0;j --){
+                if(clc[j]){
+                    clc[j + 1] = clc[j];
+                    clc[j] = 0;
+                }
+            }
+            clc[1] = modAdd(clc[1],tmp);
+            clc[0] = tmp;
+            prclc[i][a - '0'] = sol;
+        } 
+    }
+}
+
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
+    modulas(1000000007);
+    pre();
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
-        }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
-        }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        ll n,m;
+        cin >> n >> m;
+        string s = to_string(n);
+        ll sol = 0;
+        for(int i = 0;i < s.size();i ++)
+            sol = modAdd(sol,prclc[m][s[i] - '0']);
+        cout << sol << "\n";
     }
     
 

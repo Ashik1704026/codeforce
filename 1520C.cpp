@@ -55,38 +55,51 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        if(n == 2){
+            cout << "-1\n";
+            continue;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int sol[n + 10][n + 10];
+        int x = 1;
+        int f = 1;
+        for(int i = n;i >= 1;i --){
+            sol[i][f ++] = x;
+            x ++;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        for(int i = 1;i <= n;i ++){
+            f = 1 - f;
+            int a = n - i;
+            int b = 1;
+            int c = n;
+            int d = i + 1;
+            for(int j = 1;j <= n;j ++){
+                sol[a][b] = x;
+                x ++;
+                a --;
+                b ++;
+                if(a < 1)
+                    break;
+            }
+            for(int j = 1;j < n;j ++){
+                sol[c][d] = x;
+                x ++;
+                c --;
+                d ++;
+                if(d > n)
+                    break;
+            }
+        }
+        for(int i = 1;i <= n;i ++){
+            for(int j = 1;j <= n;j ++)
+                cout << sol[i][j] << " ";
+            cout << "\n";
+        }
         
     }
     

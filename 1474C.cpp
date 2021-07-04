@@ -53,41 +53,58 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+vctri res(vctri a,int x,int n){
+    multiset<int> ms;
+    for(int i = 0;i < 2 * n;i ++)
+        ms.insert(a[i]);
+    vctri rs;
+    for(int i = 0;i < n;i ++){
+        auto it1 = ms.end();
+        it1 --;
+        int y = x - *it1;
+        ms.erase(it1);
+        auto it2 = ms.find(y);
+        if(it2 == ms.end())
+            return {};
+        ms.erase(it2);
+        rs.pb(x - y);
+        rs.pb(y);
+        x = max(y,x - y);
+        // cout << *it1 << " " << y << " ";
+    }
+    return rs;
+}
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        vctri a;
+        for(int i = 0;i < 2 * n;i ++){
+            int x;
+            cin >> x;
+            a.pb(x);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        sort(a.begin(),a.end());
+        int ok = 1;
+        for(int i = 0;i < 2 * n;i ++){
+            int x = a[i] + a[2 * n - 1];
+            vctri sol = res(a,x,n);
+            if(sol.size() != 0){
+                cout << "YES\n";
+                cout << x << "\n";
+                for(int j = 0;j < 2 * n - 1;j += 2)
+                    cout << sol[j] << " " << sol[j + 1] << "\n";
+                ok = 0;
+                break;
+            }
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
+        if(ok)
+            cout << "NO\n";
 
-        
     }
     
 

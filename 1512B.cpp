@@ -57,36 +57,57 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     // fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        string str[n + 10];
+        pair<int,int> x,y;
+        int f = 1,s = 1;
+        for(int i = 0;i < n;i ++)
+            cin >> str[i];
+        for(int i = 0;i < n;i ++){
+            for(int j = 0;j < n;j ++){
+                if(str[i][j] == '*' && f){
+                    x = {i,j};
+                    f = 0;
+                }
+                else if(str[i][j] == '*' && s){
+                    y = {i,j};
+                    s = 0;
+                }
+            }
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        // cout << x.F << " " << x.S << " " << y.F << " " << y.S << "\n";
+        if(x.S == y.S){
+            if(x.S + 1 < n)
+                str[x.F][x.S + 1] = '*';
+            else
+                str[x.F][x.S - 1] = '*';
+            if(y.S + 1 < n)
+                str[y.F][y.S + 1] = '*';
+            else
+                str[y.F][y.S - 1] = '*';
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        else if(x.F == y.F){
+            if(x.F + 1 < n)
+                str[x.F + 1][x.S] = '*';
+            else
+                str[x.F - 1][x.S] = '*';
+            if(y.F + 1 < n)
+                str[y.F + 1][y.S] = '*';
+            else
+                str[y.F - 1][y.S] = '*';
+        }
+        else{
+            str[x.F][y.S] = '*';
+            str[y.F][x.S] = '*';
+        }
+        for(int i = 0;i < n;i ++){
+            for(int j = 0;j < n;j ++)
+                cout << str[i][j];
+            cout << "\n";
+        }
         
     }
     

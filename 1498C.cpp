@@ -55,41 +55,38 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n,k;
+        cin >> n >> k;
+        ll s = 1;
+        if(k > 1)
+            s ++;
+        if(n == 1){
+            cout << s << "\n";
+            continue;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        ll sum[n];
+        for(int i = 0;i < n;i ++)
+            sum[i] = 1;
+        modulas(1000000007);
+        for(int i = 2;i <= k;i ++){
+            if(i % 2 == 0){
+                for(int j = n - 2;j > 0;j --)
+                    sum[j] = modAdd(sum[j + 1],sum[j]);
+                s = modAdd(s,sum[1]);
+            }
+            else{
+                for(int j = 2;j < n;j ++)
+                    sum[j] = modAdd(sum[j],sum[j - 1]);
+                s = modAdd(s,sum[n - 1]);
+            }
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        cout << s << "\n";
         
     }
-    
 
     return 0;
 }

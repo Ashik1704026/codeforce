@@ -55,39 +55,73 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        ll n,m;
+        cin >> n >> m;
+        int a[n],b[n];
+        vctri tw,on;
+        ll sum = 0;
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        for(int i = 0;i < n;i ++){
+            cin >> b[i];
+            if(b[i] == 2)
+                tw.pb(a[i]);
+            else
+                on.pb(a[i]);
+            sum += a[i];
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        if(sum < m){
+            cout << "-1\n";
+            continue;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        sort(tw.begin(),tw.end());
+        sort(on.begin(),on.end());
+        sum = 0;
+        ll sol = 0;
+        while(sum < m){
+            int x = 0,y = 0,z = 0;
+            if(on.size() != 0){
+                x = on.back();
+                on.pop_back();
+            }
+            if(on.size() != 0){
+                y = on.back();
+                on.pop_back();
+            }
+            if(tw.size() != 0){
+                z = tw.back();
+                tw.pop_back();
+            }
+            if(!x && !y && !z)
+                break;
+            if(sum + x >= m){
+                sum += x;
+                sol ++;
+            }
+            else if(z >= x + y){
+                sol += 2;
+                sum += z;
+                on.pb(y);
+                on.pb(x);
+            }
+            else if(x){
+                sum += x;
+                if(z)
+                    tw.pb(z);
+                if(y)
+                    on.pb(y);
+                sol ++;
+            }
+            else if(z){
+                sum += z;
+                sol += 2;
+            }
+        } 
+        cout << sol << "\n";       
     }
     
 

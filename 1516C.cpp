@@ -55,39 +55,35 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int a[n];
+        int g = 0;
+        bitset<200050> bit;
+        bit[0] = 1;
+        int sum = 0;
+        for(int i = 0;i < n;i ++){
+            cin >> a[i];
+            g = __gcd(g,a[i]);
+            bit = bit | (bit << a[i]);
+            sum += a[i];
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
-        }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        if(bit[sum / 2] == 0 || (sum % 2))
+            cout << "0\n";
+        else{
+            cout << "1\n";
+            for(int i = 0;i < n;i ++){
+                a[i] = a[i] / g;
+                if(a[i] % 2){
+                    cout << i + 1 << "\n";
+                    break;
+                }
+            }
+        }   
     }
     
 

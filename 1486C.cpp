@@ -54,39 +54,63 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 
+int n;
+int qry(int l,int r){
+    if(l == r)
+        return -1;
+    cout << "? " << l << " " << r << "\n";
+    cout.flush();
+    int p;
+    cin >> p;
+    return p;
+}
+int lftBS(int l,int r,int p){
+    while(l < r){
+        int mid = (l + r + 1) / 2;
+        int np = qry(p,mid);
+        if(np == p)
+            r = mid - 1;
+        else
+            l = mid;
+    }
+    cout << "! " << l + 1 << "\n";
+    return 0;
+}
+
+int rgtBS(int l,int r,int p){
+    while(l < r){
+        int mid = (l + r + 1) / 2;
+        int np = qry(mid,p);
+        if(np == p)
+            l = mid;
+        else
+            r = mid - 1;
+    }
+    cout << "! " << l << "\n";
+    return 0;
+}
+
+
+
+
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        cin >> n;
+        int p = qry(1,n);
+        if(p == 1)
+            lftBS(1,n,1);
+        else if(p == n)
+            rgtBS(1,n,n);
+        else{
+            int np = qry(p,n);
+            if(np == p)
+                lftBS(p,n,p);
+            else
+                rgtBS(1,p,p);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
-        }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
         
     }
     

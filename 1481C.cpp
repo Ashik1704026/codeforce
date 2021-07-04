@@ -55,38 +55,61 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n,m;
+        cin >> n >> m;
+        int a[n + 10],b[n + 10],c[m + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        for(int i = 0;i < n;i ++)
+            cin >> b[i];
+        for(int i = 0;i < m;i ++)
+            cin >> c[i];
+        int ok = 0;
+        vctri v[n + 10];
+        for(int i = 0;i < n;i ++){
+            if(a[i] != b[i])
+                v[b[i]].pb(i);
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int ans[m + 10];
+        ans[m - 1] = 0;
+        if((int)v[c[m - 1]].size() > 0){
+            ans[m - 1] = v[c[m - 1]].back();
+            v[c[m - 1]].pop_back();
+            ok = 1;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        else{
+            for(int j = 0;j < n;j ++){
+                if(b[j] == c[m - 1]){
+                    ans[m - 1] = j;
+                    ok = 1;
+                    break;
+                }
+            }
+        }
+        for(int i = 0;i < m - 1;i ++){
+            if((int)v[c[i]].size() == 0)
+                ans[i] = ans[m - 1];
+            else{
+                ans[i] = v[c[i]].back();
+                v[c[i]].pop_back(); 
+            }
+        }
+        for(int i = 1;i <= n;i ++){
+            if((int)v[i].size() > 0)
+                ok = 0;
+        }
+        if(ok == 0)
+            cout << "NO\n";
+        else{
+            cout << "YES\n";
+            for(int i = 0;i < m;i ++)
+                cout << ans[i] + 1 << " ";
+            cout << "\n";
+        }
         
     }
     

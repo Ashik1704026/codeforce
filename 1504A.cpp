@@ -55,38 +55,42 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        string s;
+        cin >> s;
+        int ok = 1;
+        int st = -1;
+        for(int i = 0,j = s.size() - 1;i < s.size() / 2;i ++,j --){
+            if(s[i] != s[j]){
+                st = i;
+                ok = 0;
+                break;
+            }
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        int ar[30] = {0};
+        for(int i = 0;i < s.size();i ++)
+            ar[s[i] - 'a'] ++;
+        if(ok){
+            if(ar[0] == s.size())
+                cout << "NO\n";
+            else{
+                cout << "YES\n";
+                cout << "a" << s << "\n";
+            }
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        else{
+            ok = 1;
+            cout << "YES\n";
+            for(int i = 0;i <= st;i ++)
+                cout << s[i];
+            cout << "a";
+            for(int i = st + 1;i < s.size();i ++)
+                cout << s[i];
+            cout << "\n";
+        }
         
     }
     

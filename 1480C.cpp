@@ -55,38 +55,50 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int l = 1,r = n;
+        if(n == 1){
+            cout << "? 1" << "\n";
+            cout.flush();
+            int a;
+            cin >> a;
+            cout << "! 1\n";
+            return 0;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        while(l <= r){
+            int mid = (l + r) / 2;
+            cout << "?" << " " << mid << "\n";
+            cout.flush();
+            int a,b,c;
+            cin >> a;
+            if(mid != 1){
+                cout << "? " << mid - 1 << "\n";
+                cout.flush();
+                cin >> b;
+            }
+            else
+                b = 200000;
+            if(mid != n){
+                cout << "? " << mid + 1 << "\n";
+                cout.flush();
+                cin >> c;
+            }
+            else    
+                c = 200000;
+            if(a < min(b,c)){
+                cout << "! " << mid << "\n";
+                return 0;
+            }
+            else if(b < a)
+                r = mid - 1;
+            else if(c < a)
+                l = mid + 1;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
         
     }
     

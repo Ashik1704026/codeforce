@@ -55,38 +55,72 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n,l,r;
+        cin >> n >> l >> r;
+        int nn = n;
+        int lc[n + 10],rc[n + 10];
+        memset(lc,0);
+        memset(rc,0);
+        int sol = 0;
+        for(int i = 0;i < l;i ++){
+            int x;
+            cin >> x;
+            lc[x] ++;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        for(int i = 0;i < r;i ++){
+            int x;
+            cin >> x;
+            rc[x] ++;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        for(int i = 1;i <= n;i ++){
+            if(rc[i] && lc[i]){
+                int mn = min(lc[i],rc[i]);
+                lc[i] -= mn;
+                rc[i] -= mn;
+            }
+        }
+        if(l > r){
+            swap(l,r);
+            for(int i = 1;i <= n;i ++){
+                int x = lc[i];
+                lc[i] = rc[i];
+                rc[i] = x;
+            }
+        }
+        if(l < r){
+            for(int i = 1;i <= n && l < r;i ++){
+                int x = rc[i];
+                int y = x / 2;
+                int mn = min((nn / 2) - l,y);
+                l += mn;
+                lc[i] += mn;
+                rc[i] -= mn;
+                r -= mn;
+                sol += mn;
+            }
+        }
+        if(l < r){
+            for(int i = 1;i <= n && l < r;i ++){
+                if(lc[i] == rc[i])
+                    continue;
+                if(rc[i] != 0){
+                    rc[i] --;
+                    lc[i] ++;
+                    l ++;
+                    r --;
+                    sol ++;
+                }
+            }
+        }
+        for(int i = 1;i <= n;i ++){
+            if(rc[i] > lc[i])
+                sol += rc[i] - lc[i];
+        }
+        cout << sol << "\n";
         
     }
     

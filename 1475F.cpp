@@ -55,39 +55,62 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        string a[n + 10],b[n + 10];
+        string sol[n + 10];  
+        for(int i = 0;i < n;i ++){
+            cin >> a[i];
+            sol[i] = a[i];
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        for(int i = 0;i < n;i ++)
+            cin >> b[i];  
+        for(int i = 0;i < n;i ++){
+            if(a[i][0] != b[i][0]){
+                for(int j = 0;j < n;j ++){
+                    if(sol[i][j] == '1')
+                        sol[i][j] = '0';
+                    else
+                        sol[i][j] = '1';
+                }
+            }
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
-        
+        for(int i = 0;i < n;i ++){
+            if(sol[0][i] != b[0][i]){
+                for(int j = 0;j < n;j ++){
+                    if(sol[j][i] == '1')
+                        sol[j][i] = '0';
+                    else
+                        sol[j][i] = '1';
+                }
+            }
+        }
+        int ok = 1;
+        // cout << "\n";
+        // for(int i = 0;i < n;i ++){
+        //     for(int j = 0;j < n;j ++)
+        //         cout << b[i][j];
+        //     cout << "\n";
+        // }
+        // cout << "\n";
+        // for(int i = 0;i < n;i ++){
+        //     for(int j = 0;j < n;j ++)
+        //         cout << sol[i][j];
+        //     cout << "\n";
+        // }
+        for(int i = 0;i < n;i ++){
+            for(int j = 0;j < n;j ++)
+                if(sol[i][j] != b[i][j])
+                    ok = 0;
+        }
+        if(ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     
 

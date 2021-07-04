@@ -55,38 +55,64 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 
 
 int main(){
-    // fast;
+    fast;
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        int cntT = 0,cntM = 0;
+        int ok = 1;
+        for(int i = 0;i < n;i ++){
+            if(s[i] == 'T')
+                cntT ++;
+            else
+                cntM ++;
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        if(cntT != 2 * cntM)
+            ok = 0;
+        cntT = 0;
+        int fstM = -1,lstM = -1;
+        for(int i = 0;i < n;i ++){
+            if(s[i] == 'M')
+                lstM = i;
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        // cout << lstM << " ";
+        for(int i = 0;i < n;i ++){
+            if(s[i] == 'M'){
+                fstM = i;
+                break;
+            }
+        }
+        int cnty = 0;
+        for(int i = 0;i <= lstM;i ++){
+            if(s[i] == 'M')
+                cnty ++;
+            if(s[i] == 'T')
+                cntT ++;
+            if(cntT < cnty)
+                ok = 0;
+            // cout << cnty << " " << cntT << "\n";
+        }
+        if(cntT < cntM)
+            ok = 0;
+        cnty = cntT = 0;
+        for(int i = n - 1;i >= fstM;i --){
+            if(s[i] == 'M')
+                cnty ++;
+            if(s[i] == 'T')
+                cntT ++;
+            if(cnty > cntT)
+                ok = 0;
+        }
+        if(cntT < cntM)
+            ok = 0;
+        if(ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";        
         
     }
     

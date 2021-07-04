@@ -59,34 +59,38 @@ int main(){
     int t = 1;
     // cin >> t;
     while(t --){
-        ll p,q;
-        cout << "Enter P and Q: \n";
-        cin >> p >> q;
-        ll n = p * q;
-        ll fi_n = (p - 1) * (q - 1);
-        vctrl e,d;
-        for(ll i = 1;i <= fi_n && i <= 100000;i ++){
-            if(__gcd(i,fi_n) == 1)
-                e.pb(i);
+        int n;
+        cin >> n;
+        int p[n + 10];
+        for(int i = 1;i <= n;i ++)
+            cin >> p[i];
+        int sol[n + 10][n + 10];
+        for(int i = 0;i <= n;i ++)
+            for(int j = 0;j <= n;j ++)
+                sol[i][j] = 0;
+        for(int i = 1;i <= n;i ++){
+            sol[i][i] = p[i];
+            int x = p[i] - 1;
+            int y = i - 1;
+            int z = i + 1;
+            while(x > 0){
+                if(y > 0 && !sol[z - 1][y]){
+                    sol[z - 1][y] = p[i];
+                    y --;
+                }
+                else if(z <= n && !sol[z][y + 1]){
+                    sol[z][y + 1] = p[i];
+                    z ++;
+                }
+                x --;
+            }
         }
-        cout << "Possible value of e:\n";
-        for(auto x : e)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        ll ek,dk;
-        cin >> ek;
-        for(ll i = 1;i <= fi_n + 100;i ++){
-            if(__gcd(i * ek, fi_n) == 1)
-                d.pb(i);
+        for(int i = 1;i <= n;i ++){
+            for(int j = 1;j <= i;j ++)
+                cout << sol[i][j] << " ";
+            cout << "\n";
         }
-        cout << "Possible value of d:\n";
-        for(auto x : d)
-            cout << x << "  ";
-        cout << "\nChoose one:  ";
-        cin >> dk;
-        cout << "Public Key(e,N) =  " << ek << " , " << n << "\n";
-        cout << "Private Key(d,N) =  " << dk << " , " << n << "\n";
-
+        
         
     }
     
