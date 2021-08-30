@@ -57,25 +57,45 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        int n,k;
+        cin >> n >> k;
+        string s;
+        cin >> s;
+        s += '}';
+        string sol = "";
+        sol += s[0];
+        for(int i = 1;i < n && i < k;i ++){
+            string tmp = "";
+            if(s[i] > s[0])
+                break;
+            if(s[i] == s[0]){
+                int x,y;
+                x = 0,y = i;
+                while(s[x] == s[y]){
+                    tmp += s[x];
+                    x ++;
+                    y ++;
+                }
+                if(s[y] > s[x])
+                    break;
+                sol += tmp;
+                i = y;
+                if(y < n)
+                    sol += s[y];
+            }
+            else
+                sol += s[i];
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+        int x = 0;
+        for(int i = 0;i < k;i ++){
+            if(x >= sol.size())
+                x = 0;
+            cout << sol[x];
+            x ++;
         }
-        cout << ans << "\n";
+        cout << "\n";
         
     }
     

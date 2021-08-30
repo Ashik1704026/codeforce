@@ -52,6 +52,18 @@ inline void seivePrime(ll L, ll R) { ll lim = sqrt(R);for (ll i = 2; i <= lim; +
 inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
+ll Primechck(ll x){
+    ll cnt = 0;
+    while(x % 2 == 0){
+        x /= 2;
+        cnt ++;
+    }
+    if(x == 1)
+        return cnt;
+    else
+       return false;
+}
+
 
 
 int main(){
@@ -59,24 +71,18 @@ int main(){
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        ll n;
+        cin >> n;
+        if(n % 2)
+            cout << "Bob\n"; 
+        else if(Primechck(n)){
+            if(Primechck(n) % 2)
+                cout << "Bob\n";
+            else    
+                cout << "Alice\n";
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
-        }
-        cout << ans << "\n";
-        
+        else
+            cout << "Alice\n";
     }
     
 

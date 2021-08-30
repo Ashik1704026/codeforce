@@ -53,30 +53,55 @@ inline ll chckPrime(ll L,ll prme){return isPrime[prme - L];}
 inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R - L + 1,true);}
 
 
+ll primefact(ll x){
+    ll cnt = 0;
+    while(x % 2 == 0){
+        cnt ++;
+        x /= 2;
+    }
+    for(int i = 3;i * i <= x;i += 2){
+        while(x % i == 0){
+            cnt ++;
+            x /= i;
+        }
+    }
+    if(x > 1)
+        cnt ++;
+    return cnt;
+}
+
 
 int main(){
     fast;
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        ll a,b,k;
+        cin >> a >> b >> k;
+        ll mn = 2;
+        if(a == b){
+            mn = 0;
+            if(k == 0){
+                cout << "YES\n";
+                continue;
+            }
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+        ll x = min(a,b);
+        if(__gcd(a,b) == x){
+            mn = 1;
+            if(k == 1 && a != b){
+                cout << "YES\n";
+                continue;
+            }
         }
-        cout << ans << "\n";
-        
+        ll mx = 0;
+        mx += primefact(a);
+        mx += primefact(b);
+        // cout << mn << " " << mx << "";
+        if(k >= mn && k <= mx && k >= 2)
+            cout << "YES\n";
+        else
+            cout << "NO\n";        
     }
     
 

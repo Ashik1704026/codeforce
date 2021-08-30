@@ -57,25 +57,33 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        ll n,k,x;
+        cin >> n >> k >> x;
+        ll a[n + 10];
+        for(int i = 0;i < n;i ++)
+            cin >> a[i];
+        sort(a,a + n);
+        ll grp = 0,kabl = 0;
+        vctrl v;
+        for(int i = 1;i < n;i ++){
+            ll y = a[i] - a[i - 1];
+            if(y > x){
+                grp ++;
+                v.pb(y);
+            }
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+        grp ++;
+        sort(v.begin(),v.end());
+        for(auto y : v){
+            ll z = ((y + x - 1) / x) - 1;
+            if(k >= z){
+                grp --;
+                k -= z;
+            }
         }
-        cout << ans << "\n";
+        cout << grp << "\n";
         
     }
     

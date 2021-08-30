@@ -59,23 +59,34 @@ int main(){
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        int n;
+        cin >> n;
+        ll h[n];
+        for(int i = 0;i < n;i ++)
+            cin >> h[i];
+        sort(h,h + n);
+        ll sme = 0;
+        ll mn = 10e10;
+        for(int i = 1;i < n;i ++){
+            ll x = h[i] - h[i - 1];
+            if(x <= mn){
+                sme = h[i - 1];
+                mn = x;
+            }
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
+        vctrl vsmall,vlarge;
         for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+            if(h[i] < sme)
+                vsmall.pb(h[i]);
+            else
+                vlarge.pb(h[i]);
         }
-        cout << ans << "\n";
+        cout << vlarge[0] << " ";
+        for(int i = 2;i < vlarge.size();i ++)
+            cout << vlarge[i] << " ";
+        for(auto x : vsmall)
+            cout << x << " ";
+        cout << vlarge[1] << "\n";
         
     }
     

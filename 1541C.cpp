@@ -59,24 +59,27 @@ int main(){
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        int n;
+        cin >> n;
+        ll d[n + 10];
+        for(int i = 1;i <= n;i ++)
+            cin >> d[i];
+        prll sumd[n + 10];
+        memset(sumd,0);
+        for(int i = 1;i <= n;i ++)
+            sumd[i].F = sumd[i - 1].F + d[i];
+        for(int i = n;i >= 1;i --)
+            sumd[i].S = sumd[i + 1].S + d[i];
+        ll s = 0,sol = 0,tmp = 0;
+        for(int i = 1;i <= n;i ++){
+            int x,y;
+            x = i - 1;
+            y = n - i;
+            sol += sumd[i - 1].F - (x * d[i]);
+            sol += sumd[i + 1].S - (y * d[i]);
+            cout << sol << " ";
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
-        }
-        cout << ans << "\n";
-        
+        cout << sol << "\n";
     }
     
 

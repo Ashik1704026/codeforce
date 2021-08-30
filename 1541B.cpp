@@ -59,23 +59,29 @@ int main(){
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
-        }
-        sort(a.begin(),a.end());
-        ll ans = 0;
+        int n;
+        cin >> n;
+        prii a[n];
         for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+            int x;
+            cin >> x;
+            a[i] = {x,i + 1};
         }
-        cout << ans << "\n";
+        sort(a,a + n);
+        set<prii> s;
+        for(int i = 0;i < n;i ++){
+            for(int j = i + 1;j < n;j ++){
+                if((a[i].F *1LL* a[j].F) >= 2 * n)
+                    break;
+                if(a[i].F * a[j].F == a[i].S + a[j].S)
+                    s.insert({a[i].F,a[j].F});
+            }
+        }
+        cout << s.size() << "\n";
+        // for(auto x : s){
+        //     cout << x.F << " " << x.S << "  ";
+        // }
+        // cout << "\n";
         
     }
     

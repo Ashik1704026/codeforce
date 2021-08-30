@@ -57,26 +57,40 @@ inline ll cntPrime(ll L,ll R){return count(isPrime.begin(),isPrime.begin() + R -
 int main(){
     fast;
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
-        }
-        sort(a.begin(),a.end());
-        ll ans = 0;
+        int n;
+        cin >> n;
+        vector<prll> v;
         for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
+            ll x,y;
+            cin >> x >> y;
+            v.pb({y,x});
         }
-        cout << ans << "\n";
-        
+        sort(v.begin(),v.end());
+        ll sol = 0,tmp = 0,a = 0, b = 0, c = 0;
+        int j = n - 1;
+        for(int i = 0;i < n;i ++){
+            if(v[i].S == 0)
+                continue;
+            if(j < i)
+                a = 0;
+            else
+                a = max(0LL, v[i].F - tmp);
+            while(a > 0 && i <= j){
+                b = min(v[j].S,a);
+                sol += b * 2;
+                a -= b;
+                v[j].S -= b;
+                tmp += b;
+                if(v[j].S == 0)
+                    j --;
+            }
+            sol += v[i].S;
+            tmp += v[i].S;
+            // cout << sol << " ";
+        }
+        cout << sol << "\n";
     }
     
 

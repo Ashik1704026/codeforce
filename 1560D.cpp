@@ -58,24 +58,31 @@ int main(){
     fast;
     int t = 1;
     cin >> t;
+    vctrl pow2;
+    for(int i = 0;i <= 62;i ++)
+        pow2.pb(1LL << i);
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
+        ll n;
+        cin >> n;
+        string s;
+        s = to_string(n);
+        int sol = 199999;
+        for(auto x : pow2){
+            string y = to_string(x);
+            int tmp1 = 0,tmp2 = 0;
+            int j = 0;
+            for(int i = 0;i < s.size();i ++){
+                if(s[i] == y[j]){
+                    tmp1 ++;
+                    j ++;
+                }
+            }
+            int z = s.size();
+            int w = y.size();
+            sol = min(sol,z - tmp1 + w - tmp1);
+            // cout << x << " " << tmp1 << " " << z - tmp1 + w - tmp1 << "\n";
         }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
-        }
-        cout << ans << "\n";
+        cout << sol << "\n";
         
     }
     

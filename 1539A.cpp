@@ -59,23 +59,14 @@ int main(){
     int t = 1;
     cin >> t;
     while(t --){
-        ll n,l,r;
-        cin >> n >> l >> r;
-        vctrl a;
-        for(int i = 0;i < n; i++){
-            ll x;
-            cin >> x;
-            a.pb(x);
-        }
-        sort(a.begin(),a.end());
-        ll ans = 0;
-        for(int i = 0;i < n;i ++){
-            int x = upper_bound(a.begin() + i + 1,a.end(),r - a[i]) - (a.begin());
-            int y = lower_bound(a.begin() + i + 1,a.end(),l - a[i]) - (a.begin());
-            // cout << x << " " << y << "\n";
-            ans += x - y;
-        }
-        cout << ans << "\n";
+        ll n,x,k;
+        cin >> n >> x >> k;
+        ll y = k / x;
+        y = min(y,n);
+        ll sum = 0;
+        sum = (y * (y - 1)) / 2;
+        sum += (n - y) * y;
+        cout << sum << "\n";
         
     }
     
